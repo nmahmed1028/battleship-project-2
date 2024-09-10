@@ -3,7 +3,6 @@
 
 import unittest
 from piece import Piece
-from player import Player
 
 # A single tile on the battleship board
 class Tile:
@@ -39,11 +38,29 @@ class Board:
     def addPiece(self, piece: Piece, x: int, y: int) -> None:
         for [yOffset, row] in enumerate(piece.shape):
             for [xOffset, item] in enumerate(row):
-                self.getTile(x+xOffset, y+yOffset).addPiece(item)
+                if item:
+                    self.getTile(x+xOffset, y+yOffset).addPiece(piece)
+
+    # Check if placing a piece at a location would collide with other pieces
+    def piecePlacementValid(self, piece: Piece, x: int, y: int) -> bool:
+        valid = True
+        for [yOffset, row] in enumerate(piece.shape):
+            for [xOffset, item] in enumerate(row):
+                if item:
+                    valid &= not (self.getPiece(x + xOffset, y + yOffset) is None)
+        return valid
     
-    def getTile(self, x: int, y: int):
-        return self.grid[y][x]
+    def getTile(self, x: int, y: int) -> Tile | None:
+        if len(self.grid) <= y:
+            return None
+        row = self.grid[y]
+        if len(row) <= x:
+            return None
+        return row[x]
     
     # Get the piece at a given location
     def getPiece(self, x: int, y: int) -> Piece | None:
-        return self.getTile(x, y).piece()
+        tile = self.getTile(x, y)
+        if tile is None:
+            return None
+        return tile.piece
