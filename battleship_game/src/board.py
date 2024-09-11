@@ -1,7 +1,6 @@
 # ETA: 1h
 # Actual time: 52 min
 
-import unittest
 from piece import Piece
 
 # A single tile on the battleship board
@@ -18,11 +17,11 @@ class Tile:
         self.piece = piece
 
     # Get the piece on this Tile or None if the tile is empty
-    def piece(self) -> Piece | None:
+    def getPiece(self) -> Piece | None:
         return self.piece
     
     # Mark the tile as hit 
-    def hit(self) -> None:
+    def markAsHit(self) -> None:
         self.hit = True
 
     # Check if the tile has been hit yet
@@ -47,7 +46,7 @@ class Board:
         for [yOffset, row] in enumerate(piece.shape):
             for [xOffset, item] in enumerate(row):
                 if item:
-                    valid &= not (self.getPiece(x + xOffset, y + yOffset) is None)
+                    valid &= (self.getPiece(x + xOffset, y + yOffset) is None)
         return valid
     
     def getTile(self, x: int, y: int) -> Tile | None:
@@ -64,3 +63,20 @@ class Board:
         if tile is None:
             return None
         return tile.piece
+    
+    # Hit a tile and return if there was a piece there
+    def hit(self, x: int, y: int) -> bool:
+        tile = self.getTile(x, y)
+        if tile is None:
+            return False
+
+        tile.markAsHit()
+        return not (tile.piece is None)
+    
+    # Check if there are any pieces left on the board
+    def hasUnsunkShips(self) -> bool:
+        for row in self.grid:
+            for tile in row:
+                if not (tile.piece is None) and not tile.isHit():
+                    return True
+        return False
