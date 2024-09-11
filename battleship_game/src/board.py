@@ -1,6 +1,3 @@
-# ETA: 1h
-# Actual time: 52 min
-
 from piece import Piece
 
 # A single tile on the battleship board
