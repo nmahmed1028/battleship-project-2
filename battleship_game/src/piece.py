@@ -16,7 +16,7 @@ class Piece:
 
     # Rotates the piece 90 degrees to the left
     def rotated_left(self) -> Self:
-        rows = self.columns()
+        rows = self.rows()
         cols = self.columns()
         # The new shape has the same dimensions as the old shape transposed
         shape = [[False for _ in range(rows)] for _ in range(cols)]
@@ -28,7 +28,7 @@ class Piece:
         return Piece(shape)
 
     def rotated_right(self) -> Self:
-        rows = self.columns()
+        rows = self.rows()
         cols = self.columns()
         # The new shape has the same dimensions as the old shape transposed
         shape = [[False for _ in range(rows)] for _ in range(cols)]
