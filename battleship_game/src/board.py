@@ -77,3 +77,15 @@ class Board:
                 if not (tile.piece is None) and not tile.isHit():
                     return True
         return False
+
+
+    def print_board(self) -> None:
+        for row in self.grid:
+            row_str = ""
+            for tile in row:
+                if tile.isHit():
+                    row_str += "X " if tile.piece else ". "
+                else:
+                    row_str += "O " if tile.piece else "- "
+            print(row_str)
+
