@@ -15,6 +15,17 @@ class TestPieceMethods(unittest.TestCase):
                 [True, False]
             ])
         )
+    
+    def test_rotate_left_long(self):
+        self.assertEqual(
+            piece.Piece([
+                [True, False]
+            ]).rotated_left(),
+            piece.Piece([
+                [True], 
+                [False]
+            ])
+        )
 
     def test_rotate_right(self):
         self.assertEqual(
@@ -25,6 +36,17 @@ class TestPieceMethods(unittest.TestCase):
             piece.Piece([
                 [False, True], 
                 [False, False]
+            ])
+        )
+
+    def test_rotate_right_long(self):
+        self.assertEqual(
+            piece.Piece([
+                [True, False]
+            ]).rotated_left(),
+            piece.Piece([
+                [False], 
+                [True]
             ])
         )
 
