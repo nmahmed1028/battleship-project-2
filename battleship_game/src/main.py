@@ -1,3 +1,6 @@
+# ETA: 1h
+# Actual time: 2h + 15min
+
 import pygame
 from .constants import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE
 from .game import Game
