@@ -1,5 +1,4 @@
 import unittest
-from typing import List
 import piece
 
 # A battleship piece
