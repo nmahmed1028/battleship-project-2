@@ -1,6 +1,6 @@
 # setup.sh
 
-# Specify the path to the desired Python version
+# Specify the path to the desired Python version - 
 PYTHON_VERSION="$(which python3.11)"  # Change this to the path of the desired Python version
 
 # Create a virtual environment with the specified Python version
