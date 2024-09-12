@@ -1,6 +1,5 @@
 import unittest
-import piece
-from board import Board, Tile
+from board import Board
 from piece import Piece
 
 # Tests for the board

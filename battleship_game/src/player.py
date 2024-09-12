@@ -1,4 +1,3 @@
-import unittest
 from piece import Piece
 from typing import List
 from board import Board
