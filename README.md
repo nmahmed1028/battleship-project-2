@@ -32,8 +32,14 @@ Follow these steps to set up the project:
    source venv/bin/activate
    ```
 
-5. **Verify the setup**:
+5. **Verify the pygame setup**:
 
    ```sh
    python -m pygame.examples.aliens
+   ```
+
+6. **Run the Battleship game**:
+
+   ```sh
+   python run_game.py
    ```
