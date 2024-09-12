@@ -1,6 +1,3 @@
-# ETA: 1h
-# Actual time: 52 min + 28 min
-
 import unittest
 from piece import Piece
 from typing import List
