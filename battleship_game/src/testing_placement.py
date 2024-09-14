@@ -1,9 +1,9 @@
 import pygame
 import sys
 from typing import List
-from board import Board  # Import the Board class from backend
-from piece import Piece  # Import the Piece class from backend
-from player import Player
+from .board import Board  # Import the Board class from backend
+from .piece import Piece  # Import the Piece class from backend
+from .player import Player
 def ship_placement(player: Player):
     # Initialize Pygame
     pygame.init()

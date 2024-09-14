@@ -1,10 +1,16 @@
+# ui.py
 import pygame
 import sys
-from testing_placement import ship_placement 
-from player import Player
+from .testing_placement import ship_placement 
+from .player import Player
+from .config import BACKGROUND_COLOUR, BLACK, LIGHT_BLUE, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
 
-# Initialize Pygame
-pygame.init()
+
+# Initialize fonts
+pygame.font.init()
+font = pygame.font.SysFont(FONT_NAME, FONT_SIZE)
+title_font = pygame.font.SysFont(FONT_NAME, TITLE_FONT_SIZE)
+
 
 # Set up display
 width, height = 600, 600
@@ -15,35 +21,31 @@ pygame.display.set_caption("Battleship Game")  # Corrected function name
 background_colour = (236, 215, 240)  # Purple color
 
 # Colors
-black = (0, 0, 0)
+# black = (0, 0, 0)
 light_blue = (173, 216, 230)
-
-# Font
-font = pygame.font.SysFont("Comic Sans MS", 30)
-title_font = pygame.font.SysFont("Comic Sans MS", 50)  # Bigger font for title
 
 # Button properties
 button_rect = pygame.Rect(200, 250, 200, 80)  # Position (x, y) and size (width, height)
 
-def draw_start_button():
-    pygame.draw.rect(screen, light_blue, button_rect)  # No rounded corners
-    pygame.draw.rect(screen, black, button_rect, 3)  # Border with no rounded corners
+def draw_start_button(screen):
+    button_rect = pygame.Rect(200, 250, 200, 80)
+    pygame.draw.rect(screen, LIGHT_BLUE, button_rect)
+    pygame.draw.rect(screen, BLACK, button_rect, 3)
 
-    text_surface = font.render("Start Game", True, black)
+    text_surface = font.render("Start Game", True, BLACK)
     text_rect = text_surface.get_rect(center=button_rect.center)
     screen.blit(text_surface, text_rect)
 
-def draw_title():
-    title_surface = title_font.render("BATTLESHIP", True, black)
-    title_rect = title_surface.get_rect(center=(width // 2, 100))  # Position at the top center
+def draw_title(screen):
+    title_surface = title_font.render("BATTLESHIP", True, BLACK)
+    title_rect = title_surface.get_rect(center=(screen.get_width() // 2, 100))
     screen.blit(title_surface, title_rect)
 
-def start_game():
+def start_game(screen):
     while True:
-        screen.fill(background_colour)  # Fill background with purple
-
-        draw_title()
-        draw_start_button()  # Draw the start button
+        screen.fill(BACKGROUND_COLOUR)
+        draw_title(screen)
+        draw_start_button(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -51,6 +53,7 @@ def start_game():
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                button_rect = pygame.Rect(200, 250, 200, 80)
                 if button_rect.collidepoint(event.pos):
                     print("Start Game Clicked!")
                     return
@@ -82,7 +85,7 @@ def game_setup():
          # Display labels 
         for i, label in enumerate(labels): 
             # Render text
-            text_surface = font.render(label, True, black) 
+            text_surface = font.render(label, True, BLACK) 
             # Position text
             screen.blit(text_surface, (50, 200 + i * 50))
 
@@ -93,11 +96,11 @@ def game_setup():
             truncated_text = user_texts[i]
             while font.size(truncated_text)[0] > box.width - 10:
                 truncated_text = truncated_text[:-1]
-            text_surface = font.render(truncated_text, True, black)
+            text_surface = font.render(truncated_text, True, BLACK)
             screen.blit(text_surface, (box.x + 5, box.y + 5)) 
 
         pygame.draw.rect(screen, light_blue, next_button_rect)  
-        next_text_surface = font.render("Next", True, black)
+        next_text_surface = font.render("Next", True, BLACK)
         # Center the text on the Next button
         next_text_rect = next_text_surface.get_rect(center=next_button_rect.center)
         # Display the text on the Next button
@@ -164,12 +167,12 @@ def end_game(winner):
         screen.fill(background_colour)
         
         # Render "Game Over" text
-        game_over_surface = title_font.render("Game Over", True, black)
+        game_over_surface = title_font.render("Game Over", True, BLACK)
         game_over_rect = game_over_surface.get_rect(center=(width // 2, height // 2 - 50))
         screen.blit(game_over_surface, game_over_rect)
         
         # Render "Player X Won" text
-        winner_surface = font.render(f"{winner} Won!", True, black)
+        winner_surface = font.render(f"{winner} Won!", True, BLACK)
         winner_rect = winner_surface.get_rect(center=(width // 2, height // 2 + 50))
         screen.blit(winner_surface, winner_rect)
 

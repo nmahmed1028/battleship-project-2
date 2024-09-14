@@ -1,6 +1,6 @@
-from piece import Piece
+from .piece import Piece
 from typing import List
-from board import Board
+from .board import Board
 
 # The pieces each player starts with in the game
 STARTING_PIECES: List[Piece] = [

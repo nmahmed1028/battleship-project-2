@@ -1,4 +1,4 @@
-from piece import Piece
+from .piece import Piece
 
 # A single tile on the battleship board
 class Tile:

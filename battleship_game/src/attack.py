@@ -1,7 +1,7 @@
 import pygame
 import sys
-from board import Board
-from player import Player
+from .board import Board
+from .player import Player
 
 # Initialize Pygame
 pygame.init()

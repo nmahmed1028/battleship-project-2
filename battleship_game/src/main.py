@@ -1,8 +1,7 @@
-# ETA: 1h
-# Actual time: 2h + 15min
+# main.py
 
 import pygame
-from .constants import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE
+from .config import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE
 from .game import Game
 
 def main():
@@ -11,7 +10,10 @@ def main():
     pygame.display.set_caption("Battleship Game")
 
     # Create game instance
-    game = Game()
+    game = Game(screen)
+
+    # Run the initial game setup (start screen)
+    game.run()
 
     # Main game loop
     running = True
@@ -28,7 +30,7 @@ def main():
 
         # Render everything
         screen.fill(WHITE)
-        game.render(screen)
+        game.render()
 
         # Update the display
         pygame.display.flip()
