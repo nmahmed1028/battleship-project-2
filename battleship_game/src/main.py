@@ -19,26 +19,26 @@ def main():
     running = True
     clock = pygame.time.Clock()
 
-    while running:
-        # Handle events
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+    # while running:
+    #     # Handle events
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             running = False
 
-        # Update game state
-        game.update()
+    #     # Update game state
+    #     game.update()
 
-        # Render everything
-        screen.fill(WHITE)
-        game.render()
+    #     # Render everything
+    #     screen.fill(WHITE)
+    #     game.render()
 
-        # Update the display
-        pygame.display.flip()
+    #     # Update the display
+    #     pygame.display.flip()
 
-        # Cap the frame rate
-        clock.tick(60)
+    #     # Cap the frame rate
+    #     clock.tick(60)
 
-    pygame.quit()
+    # pygame.quit()
 
 if __name__ == "__main__":
     main()

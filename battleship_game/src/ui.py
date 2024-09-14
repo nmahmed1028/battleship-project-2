@@ -1,21 +1,15 @@
 # ui.py
 import pygame
 import sys
-from .testing_placement import ship_placement 
+from .place_ships import ship_placement 
 from .player import Player
-from .config import BACKGROUND_COLOUR, BLACK, LIGHT_BLUE, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
+from .config import BACKGROUND_COLOUR, BLACK, LIGHT_BLUE, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 # Initialize fonts
 pygame.font.init()
 font = pygame.font.SysFont(FONT_NAME, FONT_SIZE)
 title_font = pygame.font.SysFont(FONT_NAME, TITLE_FONT_SIZE)
-
-
-# Set up display
-width, height = 600, 600
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Battleship Game")  # Corrected function name
 
 # Set background color to purple
 background_colour = (236, 215, 240)  # Purple color
@@ -44,8 +38,21 @@ def draw_title(screen):
 def start_game(screen):
     while True:
         screen.fill(BACKGROUND_COLOUR)
-        draw_title(screen)
-        draw_start_button(screen)
+        
+        # Center the title
+        title_surface = title_font.render("BATTLESHIP", True, BLACK)
+        title_rect = title_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 4))
+        screen.blit(title_surface, title_rect)
+        
+        # Center the start button
+        button_rect = pygame.Rect(0, 0, 200, 80)
+        button_rect.center = (screen.get_width() // 2, screen.get_height() // 2)
+        pygame.draw.rect(screen, LIGHT_BLUE, button_rect)
+        pygame.draw.rect(screen, BLACK, button_rect, 3)
+
+        text_surface = font.render("Start Game", True, BLACK)
+        text_rect = text_surface.get_rect(center=button_rect.center)
+        screen.blit(text_surface, text_rect)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -53,14 +60,13 @@ def start_game(screen):
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                button_rect = pygame.Rect(200, 250, 200, 80)
                 if button_rect.collidepoint(event.pos):
                     print("Start Game Clicked!")
                     return
 
         pygame.display.update()
 
-def game_setup():
+def game_setup(screen):
     input_boxes = [
         # How many ships text box 
         pygame.Rect(380, 200, 140, 40), 
@@ -149,11 +155,8 @@ def game_setup():
         # Update the display
         pygame.display.update()
 
-def ship_placement_screen(num_ships, name1, name2):
-    player1 = Player(name1, num_ships)
-    player2 = Player(name2, num_ships)
-
-    print(f"Setting up game with {num_ships} ships for {name1} and {name2}")
+def ship_placement_screen(num_ships, player1: Player, player2: Player):
+    print(f"Setting up game with {num_ships} ships for {player1} and {player2}")
     # Alternate ship placement between the two players
     ship_placement(player1)
     ship_placement(player2)
@@ -161,19 +164,19 @@ def ship_placement_screen(num_ships, name1, name2):
 
 
 
-def end_game(winner):
+def end_game(screen, winner):
     while True:
         # Fill background with purple
         screen.fill(background_colour)
         
         # Render "Game Over" text
         game_over_surface = title_font.render("Game Over", True, BLACK)
-        game_over_rect = game_over_surface.get_rect(center=(width // 2, height // 2 - 50))
+        game_over_rect = game_over_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
         screen.blit(game_over_surface, game_over_rect)
         
         # Render "Player X Won" text
         winner_surface = font.render(f"{winner} Won!", True, BLACK)
-        winner_rect = winner_surface.get_rect(center=(width // 2, height // 2 + 50))
+        winner_rect = winner_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
         screen.blit(winner_surface, winner_rect)
 
         for event in pygame.event.get():

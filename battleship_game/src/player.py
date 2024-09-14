@@ -28,3 +28,7 @@ class Player:
     # Get the player's name
     def getName(self) -> str:
         return self.name
+    
+    # __str__ for player
+    def __str__(self) -> str:
+        return self.name
