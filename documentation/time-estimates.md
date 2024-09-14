@@ -5,8 +5,8 @@
 | Ship placement logic         | 1.5 hours      | ?           | ?                                                                                   |
 | Ship rotation feature        | 1 hour         | ?           | ?                                                                                   |
 | Attack logic                 | 1.5 hours      | ?           | ?                                                                                   |
-| Game start screen            | 1 hour         | 30 minutes  | Siddh - Thursday, September 12, 2024                                                |
-| Game setup screen            | 1 hour         | 1:45 hours  | Siddh - Thursday, September 12, 2024                                                |
+| Game start screen            | 1 hour         | 45 minutes  | Siddh - Thursday, September 12, 2024                                                |
+| Game setup screen            | 1 hour         | 2 hours     | Siddh - Thursday, September 12, 2024                                                |
 | Turn switching mechanics     | 30 minutes     | ?           | ?                                                                                   |
 | Hit and miss feedback        | 1 hour         | ?           | ?                                                                                   |
 | Sinking ship detection       | 1 hour         | ?           | ?                                                                                   |
@@ -16,4 +16,4 @@
 | UI polish and enhancements   | 3 hours        | ?           | ?                                                                                   |
 | Bug fixing and testing phase | 3 hours        | ?           | ?                                                                                   |
 | Player score tracking        | 1 hour         | ?           | ?                                                                                   |
-| Game over screen             | 30 minutes     | ?           | ?                                                                                   |
+| Game over screen             | 30 minutes     | 40 mintues  | Siddh - Saturday, September 14, 2024                                                |

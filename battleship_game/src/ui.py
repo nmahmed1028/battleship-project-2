@@ -52,7 +52,6 @@ def start_game():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rect.collidepoint(event.pos):
                     print("Start Game Clicked!")
-                    game_setup()
                     return
 
         pygame.display.update()
@@ -125,8 +124,7 @@ def game_setup():
                         print("Player 1:", user_texts[1])
                         print("Player 2:", user_texts[2])
                         # Proceed to the ship placement screen
-                        ship_placement_screen(num_ships, user_texts[1], user_texts[2])
-                        return
+                        return num_ships, user_texts[1], user_texts[2]
                     except ValueError as e:
                         # Print the error message
                         print(e)
@@ -153,5 +151,29 @@ def ship_placement_screen(num_ships, name1, name2):
     # For now, we'll just call the ship_placement function
     ship_placement()
 
+def end_game(winner):
+    while True:
+        # Fill background with purple
+        screen.fill(background_colour)
+        
+        # Render "Game Over" text
+        game_over_surface = title_font.render("Game Over", True, black)
+        game_over_rect = game_over_surface.get_rect(center=(width // 2, height // 2 - 50))
+        screen.blit(game_over_surface, game_over_rect)
+        
+        # Render "Player X Won" text
+        winner_surface = font.render(f"{winner} Won!", True, black)
+        winner_rect = winner_surface.get_rect(center=(width // 2, height // 2 + 50))
+        screen.blit(winner_surface, winner_rect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                # Quit the game
+                pygame.quit()
+                sys.exit()
+
+        # Update the display
+        pygame.display.update()
+        
 if __name__ == "__main__":
     start_game()
