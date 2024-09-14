@@ -2,7 +2,7 @@
 | ---------------------------- | -------------- | ----------- | ----------------------------------------------------------------------------------- |
 | Board and piece logic        | 1 hour         | 2 hours     | Evan - Tuesday, September 10, 2024: 52 min; Evan - Monday, September 9, 2024 28 min |
 | Architecture Documentation   | 30 minutes     | ?           |                                                                                     |
-| Ship placement logic         | 1.5 hours      | ?           | ?                                                                                   |
+| Ship placement logic         | 1.5 hours      | 2         | Trisha - Friday, September 13, 2024, Saturday, September 14, 2024                                                                                   |
 | Ship rotation feature        | 1 hour         | ?           | ?                                                                                   |
 | Attack logic                 | 1.5 hours      | ?           | ?                                                                                   |
 | Game start screen            | 1 hour         | 30 minutes  | Siddh - Thursday, September 12, 2024                                                |

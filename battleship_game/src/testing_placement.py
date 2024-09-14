@@ -1,9 +1,10 @@
 import pygame
 import sys
+from typing import List
 from board import Board  # Import the Board class from backend
 from piece import Piece  # Import the Piece class from backend
-
-def ship_placement():
+from player import Player
+def ship_placement(player: Player):
     # Initialize Pygame
     pygame.init()
 
@@ -12,27 +13,20 @@ def ship_placement():
     rows, cols = 10, 10  # Battleship grid is 10x10
     cell_size = width // cols
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("Place Your Ships")
+    pygame.display.set_caption(f"{player.getName()}, Place Your Ships")  # Dynamic caption
 
     # Colors
     white = (255, 255, 255)
     black = (0, 0, 0)
-    blue = (0, 0, 255)
     red = (255, 0, 0)
     gray = (200, 200, 200)
     green = (0, 255, 0)
 
-    # Ship sizes
-    ship_sizes = [5, 4, 3, 2, 1]  # Sizes of ships to place
+    # Ship sizes (based on remaining pieces for the player)
     placed_ships = []  # Store placed ships as [(size, cells), ...]
 
-    # Currently placing ship
-    placing_ship = None  # Format: (ship_size, [(x, y)] cells)
-    current_ship_index = 0  # Start with first ship (5-units)
-    horizontal = True  # True for horizontal, False for vertical
-
-    # Initialize backend Board
-    board = Board()
+    # Initialize backend Board for the player
+    board = player.board
 
     # Functions
     def draw_grid():
@@ -56,10 +50,13 @@ def ship_placement():
                     return False
         return True
 
-    def preview_ship(mouse_pos, size, horizontal):
+    def preview_ship(mouse_pos, piece: Piece):
         grid_x = mouse_pos[0] // cell_size
         grid_y = mouse_pos[1] // cell_size
-        preview_cells = [(grid_x + i if horizontal else grid_x, grid_y if horizontal else grid_y + i) for i in range(size)]
+
+        # Calculate the cells based on the shape of the Piece
+        preview_cells = [(grid_x + x, grid_y + y) for y, row in enumerate(piece.shape) for x, cell in enumerate(row) if cell]
+
         color = green if valid_placement(preview_cells) else red
 
         # Draw preview ship
@@ -70,7 +67,8 @@ def ship_placement():
         return preview_cells
 
     # Main loop for placing ships
-    while current_ship_index < len(ship_sizes):
+    current_piece = player.takeSmallestPiece()  # Get the smallest piece available
+    while current_piece:
         screen.fill(white)
         draw_grid()
         draw_placed_ships()
@@ -78,41 +76,45 @@ def ship_placement():
         # Get mouse position
         mouse_pos = pygame.mouse.get_pos()
 
-        # Preview current ship placement
-        current_ship_size = ship_sizes[current_ship_index]
-        current_ship_preview = preview_ship(mouse_pos, current_ship_size, horizontal)
+        # Preview current ship placement based on the shape of the Piece
+        current_ship_preview = preview_ship(mouse_pos, current_piece)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-            # Toggle ship orientation (horizontal/vertical) with 'R' key
+            # Rotate ship using 'R' key
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    horizontal = not horizontal
+                    current_piece = current_piece.rotated_right()  # Rotate the piece to the right
 
             # Place ship on click if it's valid
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if valid_placement(current_ship_preview):
-                    # Create a piece based on the shape defined above
-                    piece_shape = [[True] * current_ship_size] if horizontal else [[True] for _ in range(current_ship_size)]
-                    piece = Piece(piece_shape)  # Pass the shape directly
-
                     # Add ship to backend board
-                    print("Placing ship of size", current_ship_size, "at", current_ship_preview[0][0], "and", current_ship_preview[0][1])
-                    board.addPiece(piece, current_ship_preview[0][0], current_ship_preview[0][1])
-                    placed_ships.append((current_ship_size, current_ship_preview))
-                    current_ship_index += 1  # Move to the next ship
+                    board.addPiece(current_piece, current_ship_preview[0][0], current_ship_preview[0][1])
+                    placed_ships.append((current_piece.columns(), current_ship_preview))
 
                     # Print the board and pieces after placing
                     print("Current Board State:")
                     for row in board.grid:
                         print(['X' if tile.isHit() else ('P' if tile.getPiece() else '.') for tile in row])
-                    print("Placed Ships:", placed_ships)
+                    print(f"{player.getName()} Placed Ships:", placed_ships)
+
+                    # Get the next smallest piece
+                    current_piece = player.takeSmallestPiece()
+
+                    # Debugging: Print current piece and remaining pieces
+                    print(f"Current Piece: {current_piece}")
+                    print(f"Remaining Pieces: {player.unplacedPieces}")
+
+                    # Check if no more pieces are available
+                    if current_piece is None:
+                        print(f"{player.getName()} has placed all ships!")
+                        break
 
         pygame.display.update()
 
-    # When all ships are placed, transition to the main game (battleship guessing screen)
     pygame.quit()
-    print("All ships placed! Transitioning to the main game...")
+    print(f"{player.getName()} has placed all ships!")

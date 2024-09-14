@@ -21,6 +21,8 @@ class Player:
     # Take the smallest piece (out of 5 long pieces) and return it
     # or None if all pieces have been taken
     def takeSmallestPiece(self) -> Piece | None:
+        if not self.unplacedPieces:
+            return None  # Return None if there are no pieces left
         return self.unplacedPieces.pop()
     
     # Get the player's name

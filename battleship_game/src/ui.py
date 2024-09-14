@@ -1,6 +1,7 @@
 import pygame
 import sys
 from testing_placement import ship_placement 
+from player import Player
 
 # Initialize Pygame
 pygame.init()
@@ -148,10 +149,16 @@ def game_setup():
         pygame.display.update()
 
 def ship_placement_screen(num_ships, name1, name2):
+    player1 = Player(name1, num_ships)
+    player2 = Player(name2, num_ships)
+
     print(f"Setting up game with {num_ships} ships for {name1} and {name2}")
-    # add the logic to display the ship placement screen
-    # For now, we'll just call the ship_placement function
-    ship_placement()
+    # Alternate ship placement between the two players
+    ship_placement(player1)
+    ship_placement(player2)
+    print(f"Both players have placed their ships!")
+
+
 
 if __name__ == "__main__":
     start_game()
