@@ -12,10 +12,10 @@ Follow these steps to set up the project:
    ```
 
 2. **Verify Python Installation**:
-   **_Ensure you have Python 3.11 installed_**:
+   **_Ensure you have Python 3.6 or higher installed:_**:
 
    ```sh
-   python3.11 --version
+   python3 --version
    ```
 
 3. **Run the setup script**:
