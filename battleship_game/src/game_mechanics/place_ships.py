@@ -1,26 +1,24 @@
 import pygame
 import sys
 from typing import List
-from board import Board  # Import the Board class from backend
-from piece import Piece  # Import the Piece class from backend
-from player import Player
-def ship_placement(player: Player):
-    # Initialize Pygame
-    pygame.init()
+from ..board_mechanics.board import Board  # Import the Board class from backend
+from ..board_mechanics.piece import Piece  # Import the Piece class from backend
+from ..board_mechanics.player import Player
+from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE, BLACK, RED, GREEN, LIGHT_BLUE, FONT_NAME, FONT_SIZE
 
+def ship_placement(screen, player: Player):
     # Set up display
-    width, height = 600, 600
     rows, cols = 10, 10  # Battleship grid is 10x10
-    cell_size = width // cols
-    screen = pygame.display.set_mode((width, height))
+    cell_size = SCREEN_HEIGHT // cols  # Ensure the grid fits within the screen height
+    grid_width = cell_size * cols
+    grid_height = cell_size * rows
+    grid_x = (SCREEN_WIDTH - grid_width) // 2  # Center the grid horizontally
+    grid_y = (SCREEN_HEIGHT - grid_height) // 2  # Center the grid vertically
     pygame.display.set_caption(f"{player.getName()}, Place Your Ships")  # Dynamic caption
 
-    # Colors
-    white = (255, 255, 255)
-    black = (0, 0, 0)
-    red = (255, 0, 0)
-    gray = (200, 200, 200)
-    green = (0, 255, 0)
+    # Initialize fonts
+    pygame.font.init()
+    font = pygame.font.SysFont(FONT_NAME, FONT_SIZE)
 
     # Ship sizes (based on remaining pieces for the player)
     placed_ships = []  # Store placed ships as [(size, cells), ...]
@@ -30,16 +28,16 @@ def ship_placement(player: Player):
 
     # Functions
     def draw_grid():
-        for x in range(0, width, cell_size):
-            for y in range(0, height, cell_size):
+        for x in range(grid_x, grid_x + grid_width, cell_size):
+            for y in range(grid_y, grid_y + grid_height, cell_size):
                 rect = pygame.Rect(x, y, cell_size, cell_size)
-                pygame.draw.rect(screen, black, rect, 1)
+                pygame.draw.rect(screen, BLACK, rect, 1)
 
     def draw_placed_ships():
         for ship in placed_ships:
             for (x, y) in ship[1]:
-                rect = pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size)
-                pygame.draw.rect(screen, gray, rect)
+                rect = pygame.Rect(grid_x + x * cell_size, grid_y + y * cell_size, cell_size, cell_size)
+                pygame.draw.rect(screen, LIGHT_BLUE, rect)
 
     def valid_placement(ship_cells):
         for (x, y) in ship_cells:
@@ -51,17 +49,17 @@ def ship_placement(player: Player):
         return True
 
     def preview_ship(mouse_pos, piece: Piece):
-        grid_x = mouse_pos[0] // cell_size
-        grid_y = mouse_pos[1] // cell_size
+        grid_x_pos = (mouse_pos[0] - grid_x) // cell_size
+        grid_y_pos = (mouse_pos[1] - grid_y) // cell_size
 
         # Calculate the cells based on the shape of the Piece
-        preview_cells = [(grid_x + x, grid_y + y) for y, row in enumerate(piece.shape) for x, cell in enumerate(row) if cell]
+        preview_cells = [(grid_x_pos + x, grid_y_pos + y) for y, row in enumerate(piece.shape) for x, cell in enumerate(row) if cell]
 
-        color = green if valid_placement(preview_cells) else red
+        color = GREEN if valid_placement(preview_cells) else RED
 
         # Draw preview ship
         for (x, y) in preview_cells:
-            rect = pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size)
+            rect = pygame.Rect(grid_x + x * cell_size, grid_y + y * cell_size, cell_size, cell_size)
             pygame.draw.rect(screen, color, rect)
 
         return preview_cells
@@ -69,7 +67,7 @@ def ship_placement(player: Player):
     # Main loop for placing ships
     current_piece = player.takeSmallestPiece()  # Get the smallest piece available
     while current_piece:
-        screen.fill(white)
+        screen.fill(WHITE)
         draw_grid()
         draw_placed_ships()
 
@@ -116,5 +114,4 @@ def ship_placement(player: Player):
 
         pygame.display.update()
 
-    pygame.quit()
     print(f"{player.getName()} has placed all ships!")

@@ -1,6 +1,6 @@
 import unittest
-from piece import Piece
-from player import Player
+from ..board_mechanics.piece import Piece
+from ..board_mechanics.player import Player
 
 # Tests for the board
 class TestPlayerMethods(unittest.TestCase):

@@ -1,6 +1,6 @@
-from piece import Piece
+from .piece import Piece
 from typing import List
-from board import Board
+from .board import Board
 
 # The pieces each player starts with in the game
 STARTING_PIECES: List[Piece] = [
@@ -27,4 +27,8 @@ class Player:
     
     # Get the player's name
     def getName(self) -> str:
+        return self.name
+    
+    # __str__ for player
+    def __str__(self) -> str:
         return self.name
