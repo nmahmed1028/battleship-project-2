@@ -9,7 +9,7 @@ from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE, BLACK, RED, GREEN, LIGH
 def ship_placement(screen, player: Player):
     # Set up display
     rows, cols = 10, 10  # Battleship grid is 10x10
-    cell_size = SCREEN_HEIGHT // cols  # Ensure the grid fits within the screen height
+    cell_size = 50  # Set a fixed cell size to make the grid smaller
     grid_width = cell_size * cols
     grid_height = cell_size * rows
     grid_x = (SCREEN_WIDTH - grid_width) // 2  # Center the grid horizontally
@@ -38,6 +38,17 @@ def ship_placement(screen, player: Player):
             for (x, y) in ship[1]:
                 rect = pygame.Rect(grid_x + x * cell_size, grid_y + y * cell_size, cell_size, cell_size)
                 pygame.draw.rect(screen, LIGHT_BLUE, rect)
+
+    def draw_labels():
+        # Draw column labels (A-J)
+        for col in range(cols):
+            label = font.render(chr(ord('A') + col), True, BLACK)  # Convert col index to corresponding letter
+            screen.blit(label, (grid_x + col * cell_size + (cell_size - label.get_width()) // 2, grid_y - label.get_height()))
+
+        # Draw row labels (1-10)
+        for row in range(rows):
+            label = font.render(str(row + 1), True, BLACK)
+            screen.blit(label, (grid_x - label.get_width(), grid_y + row * cell_size + (cell_size - label.get_height()) // 2))
 
     def valid_placement(ship_cells):
         for (x, y) in ship_cells:
@@ -70,6 +81,7 @@ def ship_placement(screen, player: Player):
         screen.fill(WHITE)
         draw_grid()
         draw_placed_ships()
+        draw_labels()  # Draw the labels for rows and columns
 
         # Get mouse position
         mouse_pos = pygame.mouse.get_pos()

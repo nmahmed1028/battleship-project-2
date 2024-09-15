@@ -32,6 +32,7 @@ class Game:
         switch_player_screen(self.screen)
         print("both players have placed their ships")
         self.state = "MAIN_GAME"  # Transition to the main game state
+        pygame.display.set_caption("Let's Play!")  # Dynamic caption
 
         # Attacks
         attack_system = Attack(self.screen, self.player1, self.player2)

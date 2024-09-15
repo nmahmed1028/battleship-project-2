@@ -14,6 +14,7 @@ class Attack:
         self.cell_size = CELL_SIZE
         self.font = pygame.font.SysFont(FONT_NAME, FONT_SIZE)
         self.title_font = pygame.font.SysFont(FONT_NAME, TITLE_FONT_SIZE)
+        self.label_font = pygame.font.SysFont(FONT_NAME, FONT_SIZE // 2)
         self.player1 = player1
         self.player2 = player2
         self.player1_score = 0
@@ -39,6 +40,16 @@ class Attack:
                 
                 pygame.draw.rect(self.screen, color, rect)
                 pygame.draw.rect(self.screen, BLACK, rect, 1)  # Border
+        
+
+        for x in range(COLS):
+            col_label = chr(ord('A') + x)  # Convert x to letter (A, B, C,...)
+            self.draw_text(col_label, offset_x + (x + 0.5) * self.cell_size, offset_y - 10, self.label_font)
+
+        # Draw row labels (1-10)
+        for y in range(ROWS):
+            row_label = str(y + 1)  # Convert y to number (1, 2, 3,...)
+            self.draw_text(row_label, offset_x - 20, offset_y + (y + 0.5) * self.cell_size, self.label_font)
 
     def handle_attack(self, board: Board, pos, offset_x: int, offset_y: int):
         """Handle player's attack on the opponent's board."""
