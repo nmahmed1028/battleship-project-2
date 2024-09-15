@@ -46,6 +46,7 @@ class Board:
                     valid &= (self.getPiece(x + xOffset, y + yOffset) is None)
         return valid
     
+    # Get the tile at a given location. If the location does not exist, return None
     def getTile(self, x: int, y: int) -> Tile | None:
         if len(self.grid) <= y:
             return None
@@ -78,7 +79,10 @@ class Board:
                     return True
         return False
 
-
+    # Print the board for debugging purposes. Tiles are printed in a grid format with a character following this format:
+    # |           | Hit | Not Hit |
+    # | Has Piece |  X  |    O    |
+    # | No Piece  |  .  |    -    |
     def print_board(self) -> None:
         for row in self.grid:
             row_str = ""
