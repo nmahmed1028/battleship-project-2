@@ -1,6 +1,7 @@
 import pygame
 from .config import BLACK, WHITE
-from .ui import start_game, game_setup, ship_placement_screen
+from .ui import start_game, game_setup, switch_player_screen, end_game
+from .place_ships import ship_placement 
 from .player import Player
 
 class Game:
@@ -23,5 +24,10 @@ class Game:
         self.state = "SHIP_PLACEMENT"  # Transition to the ship placement state
 
         # Ship placement
-        ship_placement_screen(self.num_ships, self.player1, self.player2)
+        print(f"Placing {self.num_ships} ships for, {self.player1}, and {self.player2}")
+        ship_placement(self.screen, self.player1)
+        switch_player_screen(self.screen)
+        ship_placement(self.screen, self.player2)
+        switch_player_screen(self.screen)
+        print("both players have placed their ships")
         self.state = "MAIN_GAME"  # Transition to the main game state
