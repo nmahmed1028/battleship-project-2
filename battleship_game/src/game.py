@@ -3,6 +3,7 @@ from .config import BLACK, WHITE
 from .ui import start_game, game_setup, switch_player_screen, end_game
 from .place_ships import ship_placement 
 from .player import Player
+from .attack import Attack
 
 class Game:
     def __init__(self, screen):
@@ -31,3 +32,11 @@ class Game:
         switch_player_screen(self.screen)
         print("both players have placed their ships")
         self.state = "MAIN_GAME"  # Transition to the main game state
+
+        # Attacks
+        attack_system = Attack(self.screen)
+        winner = attack_system.attack_simulation(self.player1, self.player2)
+        self.state = "END_GAME"
+        end_game(self.screen, winner)
+        self.state = "GAME_OVER"
+        print("Game over")
