@@ -12,7 +12,7 @@
 | Hit and miss feedback        | 30 mins        | 35 mins     | Suhaan -  Thursday September 12, 2024,  Saturday, September 14, 2024                |
 | Sinking ship detection       | 1 hour         | ?           | Teja - ??, Suhaan - Saturday, September 14, 2024                                    |
 | Display grids                | 1.5 hours      | ?           | ?                                                                                   |
-| Player turn notifications    | 30 minutes     | ?           | ?                                                                                   |
+| Player turn notifications    | 30 minutes     | 15 min      | Teja - ??, Suhaan - Thursday September 12, 2024                                     |
 | Grid hiding between turns    | 30 minutes     | ?           | ?                                                                                   |
 | UI polish and enhancements   | 3 hours        | ?           | ?                                                                                   |
 | Bug fixing and testing phase | 3 hours        | ?           | ?                                                                                   |
