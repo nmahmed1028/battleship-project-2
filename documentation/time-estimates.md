@@ -1,8 +1,8 @@
 | Section                      | Estimated Time | Actual Time | Time Log                                                                            |
 | ---------------------------- | -------------- | ----------- | ----------------------------------------------------------------------------------- |
-| Board and piece logic        | 1 hour         | 2 hours     | Evan - Tuesday, September 10, 2024: 52 min; Evan - Monday, September 9, 2024 28 min |
+| Board and piece logic        | 1 hour         | 2 hours     | Evan - Tuesday, September 10, 2024: 52 min; Evan - Monday, September 9, 2024 28 min, 2024 28 min, September 15, 2024 - 9 min |
 | Architecture setup - venv    | 30 mins        | 2 hour      | Suhaan - 1.5 mins Monday, September 10, 2024: 30 mins - Saturday, September 14, 2024|
-| Architecture Documentation   | 30 minutes     | ?           |                                                                                     |
+| Architecture Documentation   | 30 minutes     | ?           | Evan - Thursday, September 12, 2024 - 14 min                                        |
 | Ship placement logic         | 1.5 hours      | 2           | Trisha - Friday, September 13, 2024, Saturday, September 14, 2024                   |
 | Ship rotation feature        | 1 hour   | 1 hour         | Trisha - Thursday September 12, 2024                                                                                           |
 | Attack logic                 | 1.5 hours      | ?           | ?                                                                                   |
@@ -16,7 +16,7 @@
 | Grid hiding between turns    | 30 minutes     | ?           | ?                                                                                   |
 | UI polish and enhancements   | 3 
 hours        | ?           | ?                                                                                   |
-| Bug fixing and testing phase | 3 hours        | ?           | ?                                                                                   |
+| Bug fixing and testing phase | 3 hours        | 20 mins     | Evan - Sunday, September 15, 2024 20 min                                            |
 | Player score tracking        | 1 hour         | 25 mins     | Suhaan - Saturday, September 14, 2024                                               |
 | Game over screen             | 30 minutes     | 40 mins     | Siddh - Saturday, September 14, 2024                                                |
 | Architecture assembling      | 2 hours        | 2.5 hours   | Suhaan - Saturday, September 14, 2024                                               |
