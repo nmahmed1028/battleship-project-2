@@ -43,3 +43,7 @@ Follow these steps to set up the project:
    ```sh
    python run_game.py
    ```
+
+## Testing
+
+You can run tests with `python -m unittest` from the `/battleship_game` folder

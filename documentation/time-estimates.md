@@ -16,7 +16,7 @@
 | Grid hiding between turns    | 30 minutes     | ?           | ?                                                                                   |
 | UI polish and enhancements   | 3 
 hours        | ?           | ?                                                                                   |
-| Bug fixing and testing phase | 3 hours        | ?           | ?                                                                                   |
+| Bug fixing and testing phase | 3 hours        | 20 mins     | Evan - Sunday, September 15, 2024 20 min                                            |
 | Player score tracking        | 1 hour         | 25 mins     | Suhaan - Saturday, September 14, 2024                                               |
 | Game over screen             | 30 minutes     | 40 mins     | Siddh - Saturday, September 14, 2024                                                |
 | Architecture assembling      | 2 hours        | 2.5 hours   | Suhaan - Saturday, September 14, 2024                                               |

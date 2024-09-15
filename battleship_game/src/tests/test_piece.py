@@ -21,8 +21,8 @@ class TestPieceMethods(unittest.TestCase):
                 [True, False]
             ]).rotated_left(),
             piece.Piece([
-                [True], 
-                [False]
+                [False], 
+                [True]
             ])
         )
 
@@ -42,10 +42,10 @@ class TestPieceMethods(unittest.TestCase):
         self.assertEqual(
             piece.Piece([
                 [True, False]
-            ]).rotated_left(),
+            ]).rotated_right(),
             piece.Piece([
-                [False], 
-                [True]
+                [True], 
+                [False]
             ])
         )
 
