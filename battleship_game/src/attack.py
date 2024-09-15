@@ -1,17 +1,23 @@
 import pygame
 import sys
+import time
 from .board import Board
 from .player import Player
-from .config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, BLACK, RED, GREEN, BLUE, GRAY, DARK_GRAY, PLAYER_BOARD_OFFSET_X, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, BUTTON_RECT
+from .config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, BLACK, RED, GREEN, BLUE, GRAY, DARK_GRAY, PLAYER_BOARD_OFFSET_X, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, BUTTON_RECT, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
 from .ui import switch_player_screen
 
 
 # Define Attack class
 class Attack:
-    def __init__(self, screen):
+    def __init__(self, screen, player1: Player, player2: Player):
         self.screen = screen
         self.cell_size = CELL_SIZE
-        self.button_rect = BUTTON_RECT
+        self.font = pygame.font.SysFont(FONT_NAME, FONT_SIZE)
+        self.title_font = pygame.font.SysFont(FONT_NAME, TITLE_FONT_SIZE)
+        self.player1 = player1
+        self.player2 = player2
+        self.player1_score = 0
+        self.player2_score = 0
 
     def draw_grid(self, board: Board, offset_x: int, offset_y: int, hide_ships=False) -> None:
         """Draw a grid on the board."""
@@ -43,12 +49,16 @@ class Attack:
                 return board.hit(x, y)  # Return hit or miss result
         return False  # Invalid or already hit
 
-    def draw_button(self):
-        """Draw the Next button."""
-        pygame.draw.rect(self.screen, GREEN, self.button_rect)
-        font = pygame.font.SysFont(None, 24)
-        text = font.render('Next', True, BLACK)
-        self.screen.blit(text, (self.button_rect.x + 20, self.button_rect.y + 15))
+    def draw_text(self, text, x, y, font, color=BLACK):
+        """Draw text on the screen."""
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect(center=(x, y))
+        self.screen.blit(text_surface, text_rect)
+
+    def draw_scores(self):
+        """Draw the scores for both players."""
+        self.draw_text(f"{self.player1.getName()}: {self.player1_score}", 100, SCREEN_HEIGHT - 30, self.font)
+        self.draw_text(f"{self.player2.getName()}: {self.player2_score}", SCREEN_WIDTH - 100, SCREEN_HEIGHT - 30, self.font)
 
     def attack(self, attacker: Player, defender: Player):
         """Main attack loop where one player attacks the other."""
@@ -61,8 +71,15 @@ class Attack:
             self.draw_grid(attacker.board, PLAYER_BOARD_OFFSET_X, BOARD_OFFSET_Y)
             self.draw_grid(defender.board, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, hide_ships=True)
 
-            # Draw the Next Button
-            self.draw_button()
+
+            # Draw labels
+            self.draw_text("Your Hits", PLAYER_BOARD_OFFSET_X + (COLS * CELL_SIZE) // 2, BOARD_OFFSET_Y - 30, self.font)
+            self.draw_text("Your Attacks", OPPONENT_BOARD_OFFSET_X + (COLS * CELL_SIZE) // 2, BOARD_OFFSET_Y - 30, self.font)
+
+            self.draw_text(f"{attacker.getName()}'s Turn", SCREEN_WIDTH // 2, SCREEN_HEIGHT - 50, self.title_font)
+
+            # Draw scores
+            self.draw_scores()
 
             # Handle events
             for event in pygame.event.get():
@@ -75,15 +92,27 @@ class Attack:
                     # Attack opponent's board
                     hit = self.handle_attack(defender.board, event.pos, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y)
                     if hit:
-                        print("Hit! You get another turn.")
+                        self.show_popup("Hit! You get another turn.", 1)
+                        # update scores
+                        if attacker is self.player1:
+                            self.player1_score += 1
+                        else:
+                            self.player2_score += 1
+
                         return True
                     else:
-                        print("Miss! Turn over.")
+                        self.show_popup("Miss! Turn over.", 1)
                         return False  # End attack, no hit
 
             pygame.display.update()
 
-    def attack_simulation(self, player1: Player, player2: Player) -> Player:
+    def show_popup(self, message, duration):
+        """Show a temporary popup message."""
+        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 100, self.font, RED)
+        pygame.display.update()
+        time.sleep(duration)
+
+    def attack_simulation(self) -> Player:
         player1_won = False
         player2_won = False
 
@@ -91,8 +120,8 @@ class Attack:
             # Player 1's turn to attack Player 2
             player1_turn = True
             while(player1_turn):
-                player1_turn = self.attack(player1, player2)
-                player1_won = not player2.board.hasUnsunkShips()
+                player1_turn = self.attack(self.player1, self.player2)
+                player1_won = not self.player2.board.hasUnsunkShips()
                 if(player1_won):
                     break
         
@@ -101,12 +130,12 @@ class Attack:
             # Player 2's turn to attack Player 1
             player2_turn = True
             while(player2_turn):
-                player2_turn = self.attack(player2, player1)
-                player2_won = not player1.board.hasUnsunkShips()
+                player2_turn = self.attack(self.player2, self.player1)
+                player2_won = not self.player1.board.hasUnsunkShips()
                 if(player2_won):
                     break
 
-        return player1 if player1_won else player2
+        return self.player1 if player1_won else self.player2
         
 
         

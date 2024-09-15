@@ -34,8 +34,8 @@ class Game:
         self.state = "MAIN_GAME"  # Transition to the main game state
 
         # Attacks
-        attack_system = Attack(self.screen)
-        winner = attack_system.attack_simulation(self.player1, self.player2)
+        attack_system = Attack(self.screen, self.player1, self.player2)
+        winner = attack_system.attack_simulation()
         self.state = "END_GAME"
         end_game(self.screen, winner)
         self.state = "GAME_OVER"
