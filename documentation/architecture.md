@@ -2,7 +2,7 @@
 
 This battleship project is implemented with python and pygame. 
 
-The entry point for the program is [run_game.py](../Battleship/run_game.py). It defines the core loop for rendering and player interaction
+The entry point for the program is [run_game.py]([../run_game.py). It defines the core loop for rendering and player interaction
 
 TODO: _ defines the UI for the screen transitions
 TODO: _ defines the UI for board setup
