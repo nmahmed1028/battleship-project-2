@@ -1,10 +1,10 @@
 import pygame
 import sys
 from typing import List
-from .board import Board  # Import the Board class from backend
-from .piece import Piece  # Import the Piece class from backend
-from .player import Player
-from .config import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE, BLACK, RED, GREEN, LIGHT_BLUE, FONT_NAME, FONT_SIZE
+from ..board_mechanics.board import Board  # Import the Board class from backend
+from ..board_mechanics.piece import Piece  # Import the Piece class from backend
+from ..board_mechanics.player import Player
+from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE, BLACK, RED, GREEN, LIGHT_BLUE, FONT_NAME, FONT_SIZE
 
 def ship_placement(screen, player: Player):
     # Set up display

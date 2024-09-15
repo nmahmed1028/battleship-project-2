@@ -1,5 +1,5 @@
 import unittest
-import piece
+from ..board_mechanics import piece
 
 # A battleship piece
 class TestPieceMethods(unittest.TestCase):

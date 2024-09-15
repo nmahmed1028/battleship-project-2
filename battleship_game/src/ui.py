@@ -1,7 +1,7 @@
 # ui.py
 import pygame
 import sys
-from .player import Player
+from .board_mechanics.player import Player
 from .config import BACKGROUND_COLOR, BLACK, LIGHT_BLUE, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH
 
 

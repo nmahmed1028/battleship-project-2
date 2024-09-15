@@ -1,9 +1,9 @@
 import pygame
 from .config import BLACK, WHITE
 from .ui import start_game, game_setup, switch_player_screen, end_game
-from .place_ships import ship_placement 
-from .player import Player
-from .attack import Attack
+from .board_mechanics.player import Player
+from .game_mechanics.place_ships import ship_placement
+from .game_mechanics.attack import Attack
 
 class Game:
     def __init__(self, screen):
