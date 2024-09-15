@@ -145,6 +145,8 @@ class Attack:
                 player2_won = not self.player1.board.hasUnsunkShips()
                 if(player2_won):
                     break
+            
+            switch_player_screen(self.screen)
 
         return self.player1 if player1_won else self.player2
         
