@@ -13,8 +13,12 @@ STARTING_PIECES: List[Piece] = [
 
 # A player in the battleship game
 class Player:
+    # Create a new player with the given name and number of ships
+    # The player will start with numberOfShips starting pieces taken from the smallest pieces in STARTING_PIECES
     def __init__(self, name: str, numberOfShips: int) -> None:
         self.name = name
+        # Take numberOfShips elements from the end of STARTING_PIECES
+        # These will be the smallest pieces in the list
         self.unplacedPieces = STARTING_PIECES[len(STARTING_PIECES) - numberOfShips:]
         self.board = Board()
 
@@ -29,6 +33,6 @@ class Player:
     def getName(self) -> str:
         return self.name
     
-    # __str__ for player
+    # Display the player
     def __str__(self) -> str:
         return self.name
