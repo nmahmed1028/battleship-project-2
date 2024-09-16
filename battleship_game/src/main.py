@@ -15,7 +15,7 @@ import pygame
 from .config import SCREEN_WIDTH, SCREEN_HEIGHT
 from .game import Game
 # this import is required to make relative imports work in tests
-import tests
+# import tests
 
 def main():
     pygame.init()
