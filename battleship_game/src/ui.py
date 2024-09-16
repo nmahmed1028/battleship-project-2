@@ -27,38 +27,74 @@ def draw_button(screen, text, rect, font):
     Returns:
         None
     """
+    # Draw the button background
     pygame.draw.rect(screen, LIGHT_BLUE, rect)
+    # Draw the button border
     pygame.draw.rect(screen, BLACK, rect, 3)
+    # Render the button text
     text_surface = font.render(text, True, BLACK)
+    # Center the text on the button
     text_rect = text_surface.get_rect(center=rect.center)
+    # Display the text on the button
     screen.blit(text_surface, text_rect)
 
 def draw_title(screen, text, font):
+    # Render the title text
     title_surface = font.render(text, True, BLACK)
+    # Center the title text on the screen
     title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    # Display the title text
     screen.blit(title_surface, title_rect)
 
 def start_game(screen):
+    """
+    The function `start_game` creates a game screen with a title and a start button that exits the game
+    when clicked.
+    
+    :param screen: The `screen` parameter in the `start_game` function is typically a reference to the
+    display surface where all the graphical elements of the game will be drawn. This surface is created
+    using a library like Pygame and represents the visible area of the game window where you can render
+    graphics, text, and
+    :return: The `start_game` function returns when the "Start Game" button is clicked.
+    """
     while True:
+        # Fill background with the specified color
         screen.fill(BACKGROUND_COLOR)
         
+        # Draw the title
         draw_title(screen, "BATTLESHIP", title_font)
+        # Center the button on the screen
         button_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100)
+        # Draw the start button
         draw_button(screen, "Start Game", button_rect, font)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                # Quit the game
                 pygame.quit()
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rect.collidepoint(event.pos):
+                    # Print a message and return when the button is clicked
                     print("Start Game Clicked!")
                     return
 
+        # Update the display
         pygame.display.update()
 
 def game_setup(screen):
+    """
+    The `game_setup` function sets up a game screen with input boxes for number of ships and player
+    names, allowing users to input data and proceed to the next step.
+    
+    :param screen: The `screen` parameter in the `game_setup` function represents the surface where all
+    the game elements will be drawn. It is typically the main surface where the game graphics are
+    displayed, and it is provided by the Pygame library
+    :return: The `game_setup` function returns a tuple containing the number of ships, Player 1's name,
+    and Player 2's name. The values are extracted from the input boxes filled by the user before
+    clicking the "Next" button.
+    """
     input_boxes = [
         # How many ships text box 
         pygame.Rect(380, 200, 140, 40), 
@@ -89,13 +125,16 @@ def game_setup(screen):
 
         # Display input boxes
         for i, box in enumerate(input_boxes): 
+            # Draw the input box
             pygame.draw.rect(screen, LIGHT_BLUE, box) 
             # Truncate text if it exceeds the box width
             truncated_text = user_texts[i]
             while font.size(truncated_text)[0] > box.width - 10:
                 truncated_text = truncated_text[:-1]
+            # Render the truncated text
             text_surface = font.render(truncated_text, True, BLACK)
-            screen.blit(text_surface, (box.x + 5, box.y + 5)) 
+            # Display the text inside the input box with some padding
+            screen.blit(text_surface, (box.x + 5, box.y + 5))
 
         pygame.draw.rect(screen, LIGHT_BLUE, next_button_rect)  
         next_text_surface = font.render("Next", True, BLACK)
@@ -148,41 +187,76 @@ def game_setup(screen):
         pygame.display.update()
 
 def switch_player_screen(screen):
+    """
+    The function `switch_player_screen` creates a screen with a "Next" button and waits for the button
+    to be clicked before returning.
+    
+    :param screen: The `screen` parameter in the `switch_player_screen` function is typically a
+    reference to the surface where you draw all the elements of your game or application using the
+    Pygame library. This surface represents the visible window or screen where graphics are displayed
+    :return: The `switch_player_screen` function returns when the "Next" button is clicked.
+    """
+    # Define the "Next" button rectangle
     next_button_rect = pygame.Rect(0, 0, 100, 50)
+    # Position the "Next" button at the bottom right corner with some padding
     next_button_rect.bottomright = (SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20)
 
     while True:
+        # Fill background with the specified color
         screen.fill(BACKGROUND_COLOR)
         
+        # Draw the title
         draw_title(screen, "Switch players", title_font)
+        # Draw the "Next" button
         draw_button(screen, "Next", next_button_rect, font)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                # Quit the game
                 pygame.quit()
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if next_button_rect.collidepoint(event.pos):
+                    # Print a message and return when the button is clicked
                     print("Next Clicked!")
                     return
 
+        # Update the display
         pygame.display.update()
 
 
 def end_game(screen, winner: Player):
+    """
+    The `end_game` function displays a "Game Over" message and the winning player's name on the screen
+    until the user closes the window.
+    
+    :param screen: The `screen` parameter in the `end_game` function is typically a reference to the
+    surface where all the graphical elements of the game are drawn. It is usually created using the
+    `pygame.display.set_mode()` function and represents the game window or display area. This surface is
+    where you render all the
+    :param winner: The `winner` parameter in the `end_game` function represents the player who has won
+    the game. It is of type `Player`, which likely refers to a class or object representing a player in
+    the game. The function uses this parameter to display a message indicating which player has won the
+    game
+    :type winner: Player
+    """
     while True:
-        # Fill background with purple
+        # Fill background with the specified color
         screen.fill(BACKGROUND_COLOR)
         
         # Render "Game Over" text
         game_over_surface = title_font.render("Game Over", True, BLACK)
+        # Center the "Game Over" text on the screen
         game_over_rect = game_over_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
+        # Display the "Game Over" text
         screen.blit(game_over_surface, game_over_rect)
         
         # Render "Player X Won" text
         winner_surface = font.render(f"{winner} Won!", True, BLACK)
+        # Center the "Player X Won" text on the screen
         winner_rect = winner_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
+        # Display the "Player X Won" text
         screen.blit(winner_surface, winner_rect)
 
         for event in pygame.event.get():
