@@ -1,4 +1,16 @@
-import pygame
+# attack.py
+
+"""
+    The code defines an Attack class that handles player attacks on a board game, including drawing
+    grids, handling attacks, displaying scores, and simulating player turns in a game loop.
+    
+    :param player1: Player object representing the first player in the game
+    :type player1: Player
+    :param player2: Player
+    :type player2: Player
+"""
+
+import pygame 
 import sys
 import time
 from ..board_mechanics.board import Board
@@ -51,7 +63,7 @@ class Attack:
             row_label = str(y + 1)  # Convert y to number (1, 2, 3,...)
             self.draw_text(row_label, offset_x - 20, offset_y + (y + 0.5) * self.cell_size, self.label_font)
 
-    def handle_attack(self, board: Board, pos, offset_x: int, offset_y: int):
+    def handle_attack(self, board: Board, pos, offset_x: int, offset_y: int) -> bool:
         """Handle player's attack on the opponent's board."""
         x = (pos[0] - offset_x) // self.cell_size
         y = (pos[1] - offset_y) // self.cell_size
@@ -60,18 +72,18 @@ class Attack:
                 return board.hit(x, y)  # Return hit or miss result
         return False  # Invalid or already hit
 
-    def draw_text(self, text, x, y, font, color=BLACK):
+    def draw_text(self, text, x, y, font, color=BLACK) -> None:
         """Draw text on the screen."""
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect(center=(x, y))
         self.screen.blit(text_surface, text_rect)
 
-    def draw_scores(self):
+    def draw_scores(self) -> None:
         """Draw the scores for both players."""
         self.draw_text(f"{self.player1.getName()}: {self.player1_score}", 100, SCREEN_HEIGHT - 30, self.font)
         self.draw_text(f"{self.player2.getName()}: {self.player2_score}", SCREEN_WIDTH - 100, SCREEN_HEIGHT - 30, self.font)
 
-    def attack(self, attacker: Player, defender: Player):
+    def attack(self, attacker: Player, defender: Player)  -> bool:
         """Main attack loop where one player attacks the other."""
 
         # Main attack loop
@@ -117,7 +129,7 @@ class Attack:
 
             pygame.display.update()
 
-    def show_popup(self, message, duration):
+    def show_popup(self, message, duration)  -> None:
         """Show a temporary popup message."""
         self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 100, self.font, RED)
         pygame.display.update()
@@ -154,7 +166,7 @@ class Attack:
         
 
 # Example of usage inside a game loop
-def game(player1: Player, player2: Player):
+def game(player1: Player, player2: Player)  -> None:
     # Create the Attack class object
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))

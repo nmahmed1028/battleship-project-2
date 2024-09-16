@@ -1,4 +1,15 @@
 # main.py
+"""
+main.py
+
+This module initializes and runs the Battleship game using Pygame.
+
+Functions:
+    main(): Initializes Pygame, sets up the display, creates a Game instance, and runs the game.
+
+Usage:
+    Run this module directly to start the Battleship game.
+"""
 
 import pygame
 from .config import SCREEN_WIDTH, SCREEN_HEIGHT
