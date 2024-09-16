@@ -1,4 +1,40 @@
 from .piece import Piece
+"""
+This module defines the mechanics of the battleship game board, including the Tile and Board classes.
+Classes:
+    Tile: Represents a single tile on the battleship board.
+    Board: Represents the game board that stores each piece at its location.
+Tile:
+    Methods:
+        __init__() -> None:
+            Initializes a Tile object with no piece and not hit.
+        addPiece(piece: Piece) -> None:
+            Adds a piece to the tile.
+        getPiece() -> Piece | None:
+            Returns the piece on the tile or None if the tile is empty.
+        markAsHit() -> None:
+            Marks the tile as hit.
+        isHit() -> bool:
+            Checks if the tile has been hit.
+Board:
+    Methods:
+        __init__() -> None:
+            Initializes a Board object with a 10x10 grid of Tile objects.
+        addPiece(piece: Piece, x: int, y: int) -> None:
+            Adds a piece to the board at the specified offset.
+        piecePlacementValid(piece: Piece, x: int, y: int) -> bool:
+            Checks if placing a piece at a location would collide with other pieces.
+        getTile(x: int, y: int) -> Tile | None:
+            Returns the tile at a given location or None if the location does not exist.
+        getPiece(x: int, y: int) -> Piece | None:
+            Returns the piece at a given location or None if the tile is empty.
+        hit(x: int, y: int) -> bool:
+            Hits a tile and returns if there was a piece there.
+        hasUnsunkShips() -> bool:
+            Checks if there are any pieces left on the board.
+        print_board() -> None:
+            Prints the board for debugging purposes.
+"""
 
 # A single tile on the battleship board
 class Tile:

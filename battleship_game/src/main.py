@@ -18,6 +18,10 @@ from .game import Game
 from . import tests
 
 def main():
+    """
+    The `main` function initializes a Pygame window for a Battleship game and runs the initial game
+    setup.
+    """
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Battleship Game")
