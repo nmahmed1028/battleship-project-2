@@ -3,6 +3,8 @@ from ..board_mechanics.board import Board
 from ..board_mechanics.piece import Piece
 
 # Tests for the board
+# This class defines a unit test case for the `place_piece` method in a `Board` class, where a `Piece`
+# object is added to the board at different positions.
 class TestBoardMethods(unittest.TestCase):
     def test_place_piece(self):
         board = Board()
@@ -15,6 +17,9 @@ class TestBoardMethods(unittest.TestCase):
                 board.addPiece(piece, x, y)
     
     def test_piece_placement_valid(self):
+        """
+        The function tests if a piece can be placed on the board at a specific position.
+        """
         board = Board()
         piece = Piece([
             [True]
@@ -24,6 +29,10 @@ class TestBoardMethods(unittest.TestCase):
 
     # Check piece collision
     def test_piece_collision(self):
+        """
+        The `test_piece_collision` function tests for piece collision on a game board by adding a piece and
+        checking specific positions for the presence of a piece.
+        """
         board = Board()
         piece = Piece([
             [True, True], 
@@ -52,6 +61,10 @@ class TestBoardMethods(unittest.TestCase):
                     self.assertIsNone(board.getPiece(x, y))
 
     def test_has_end_game(self):
+        """
+        The function `test_has_end_game` tests the functionality of checking for unsunk ships on a game
+        board.
+        """
         board = Board()
         self.assertFalse(board.hasUnsunkShips())
 
