@@ -13,27 +13,35 @@
 import pygame 
 import sys
 import time
-from ..board_mechanics.board import Board
-from ..board_mechanics.player import Player
+from ..board_mechanics.board import Board # Import the Board class from backend
+from ..board_mechanics.player import Player # Import the Piece class from backend
 from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, BLACK, RED, GREEN, BLUE, GRAY, DARK_GRAY, PLAYER_BOARD_OFFSET_X, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, BUTTON_RECT, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
 from ..ui import switch_player_screen
 
 
 # Define Attack class
+# The `Attack` class in Python handles player attacks on opponent boards, manages game flow, and
+# displays game elements such as grids, scores, and popup messages.
 class Attack:
     def __init__(self, screen, player1: Player, player2: Player):
+        # This block of code is setting up the display for the Battleship game. Here's a breakdown of what
+        # each part is doing:
+        # Set up display
         self.screen = screen
         self.cell_size = CELL_SIZE
         self.font = pygame.font.SysFont(FONT_NAME, FONT_SIZE)
         self.title_font = pygame.font.SysFont(FONT_NAME, TITLE_FONT_SIZE)
         self.label_font = pygame.font.SysFont(FONT_NAME, FONT_SIZE // 2)
+        # initializing instance variables for the `Attack` object
         self.player1 = player1
         self.player2 = player2
-        self.player1_score = 0
+        self.player1_score = 0 #keeping score
         self.player2_score = 0
 
     def draw_grid(self, board: Board, offset_x: int, offset_y: int, hide_ships=False) -> None:
         """Draw a grid on the board."""
+        # This block of code is responsible for drawing the grid for the game board. Here's a
+        # breakdown of what it does:
         for x in range(COLS):
             for y in range(ROWS):
                 tile = board.getTile(x, y)
@@ -136,6 +144,12 @@ class Attack:
         time.sleep(duration)
 
     def attack_simulation(self) -> Player:
+        """
+        The function simulates a turn-based attack game between two players until one player wins by
+        sinking all of the opponent's ships.
+        :return: The `attack_simulation` method returns the player who won the game, either
+        `self.player1` or `self.player2`.
+        """
         player1_won = False
         player2_won = False
 
@@ -181,6 +195,7 @@ def game(player1: Player, player2: Player)  -> None:
 
     while not (player1_won or player2_won):
         # Player 1's turn to attack Player 2
+        # player's turn in the game loop.
         player1_turn = True
         while(player1_turn):
             player1_turn = attack_system.attack(player1, player2)

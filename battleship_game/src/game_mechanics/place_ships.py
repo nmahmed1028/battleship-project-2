@@ -80,6 +80,16 @@ def ship_placement(screen, player: Player) -> None:
             label = font.render(str(row + 1), True, BLACK)
             screen.blit(label, (grid_x - label.get_width(), grid_y + row * cell_size + (cell_size - label.get_height()) // 2))
 
+    def draw_instructions() -> None:
+        """
+        Draw instructions for the user on the bottom of the screen.
+        """
+        instructions = "Use the R - key to rotate ships."
+        instruction_label = font.render(instructions, True, BLACK)
+        instruction_x = grid_x + (grid_width - instruction_label.get_width()) // 2  # Place it to the center
+        instruction_y = grid_y + grid_height + 5  # Align with the bottom of the grid
+        screen.blit(instruction_label, (instruction_x, instruction_y))
+
     def valid_placement(ship_cells) -> bool:
         """
             The function `valid_placement` checks if a set of ship cells is within the bounds and does not
@@ -144,6 +154,7 @@ def ship_placement(screen, player: Player) -> None:
         draw_grid()
         draw_placed_ships()
         draw_labels()  
+        draw_instructions()
 
 
      
