@@ -1,3 +1,32 @@
+# piece.py
+"""
+This module defines the `Piece` class, which represents a battleship piece.
+Classes:
+    Piece: A class representing a battleship piece with various methods to manipulate its shape.
+Methods:
+    __init__(shape: List[List[bool]]) -> None:
+        Initializes a new piece with the given shape.
+        Args:
+            shape (List[List[bool]]): A grid of booleans representing the shape of the piece.
+    rows() -> int:
+        Returns the number of rows in the piece.
+    columns() -> int:
+        Returns the number of columns in the piece.
+    rotated_left() -> Self:
+        Returns a new piece that is rotated 90 degrees to the left.
+    rotated_right() -> Self:
+        Returns a new piece that is rotated 90 degrees to the right.
+    __eq__(other) -> bool:
+        Checks if two pieces are equal.
+        Args:
+            other: The other piece to compare with.
+        Returns:
+            bool: True if the pieces are equal, False otherwise.
+    __repr__() -> str:
+        Returns a string representation of the piece for debugging purposes.
+"""
+
+
 from typing import Self
 from typing import List
 

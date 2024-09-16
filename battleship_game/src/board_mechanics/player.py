@@ -1,3 +1,23 @@
+# player.py
+"""
+player.py
+This module defines the Player class and the starting pieces for each player in the Battleship game.
+Classes:
+    Player: Represents a player in the Battleship game.
+Constants:
+    STARTING_PIECES (List[Piece]): The pieces each player starts with in the game.
+Player:
+    Methods:
+        __init__(name: str, numberOfShips: int) -> None:
+            Initializes a new player with the given name and number of ships.
+        takeSmallestPiece() -> Piece | None:
+            Takes the smallest piece (out of 5 long pieces) and returns it, or None if all pieces have been taken.
+        getName() -> str:
+            Returns the player's name.
+        __str__() -> str:
+            Returns the player's name as a string representation of the player.
+"""
+
 from .piece import Piece
 from typing import List
 from .board import Board
