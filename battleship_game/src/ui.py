@@ -15,6 +15,18 @@ button_rect = pygame.Rect(200, 250, 200, 80)  # Position (x, y) and size (width,
 
 
 def draw_button(screen, text, rect, font):
+    """
+    Draws a button with text on the given screen.
+
+    Args:
+        screen (pygame.Surface): The surface on which to draw the button.
+        text (str): The text to display on the button.
+        rect (pygame.Rect): The rectangle defining the button's position and size.
+        font (pygame.font.Font): The font used to render the text.
+
+    Returns:
+        None
+    """
     pygame.draw.rect(screen, LIGHT_BLUE, rect)
     pygame.draw.rect(screen, BLACK, rect, 3)
     text_surface = font.render(text, True, BLACK)
