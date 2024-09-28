@@ -1,6 +1,6 @@
 import random #could use this for easy and medium
-from board_mechanics.player import Player
-from board_mechanics.board import Board
+from ..board_mechanics.player import Player
+from ..board_mechanics.board import Board
 from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, BLACK, RED, GREEN, BLUE, GRAY, DARK_GRAY, PLAYER_BOARD_OFFSET_X, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, BUTTON_RECT, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
 
 class AI(Player): #initialize AI as a Player object so it can play like one
