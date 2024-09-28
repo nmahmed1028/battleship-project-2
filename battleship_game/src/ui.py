@@ -186,6 +186,78 @@ def game_setup(screen):
         # Update the display
         pygame.display.update()
 
+
+def single_player_setup(screen):
+    """
+    Set up a single player game where the player plays against an AI.
+    Similar to game_setup() function
+    
+    :param screen: The pygame screen to display the setup UI.
+    :return: Tuple containing number of ships, human player name, and AI difficulty level.
+    """
+
+    input_boxes = [
+        pygame.Rect(380, 200, 140, 40), #how many ships text box
+        pygame.Rect(380, 250, 140, 40), #player name text box
+        pygame.Rect(380, 300, 140, 40) #ai difficulty text box
+    ]
+
+    next_button_rect = pygame.Rect(250, 350, 100, 50)
+    active_box = None
+    user_texts = ["", "", ""] #text for num ships, player name, ai difficulty
+
+    while True:
+        screen.fill(BACKGROUND_COLOR)
+        labels = ["How many ships (1-5):", "Player Name:", "AI Difficulty (easy, medium, hard)"]
+        for i, label in enumerate(labels):
+            text_surface = font.render(label, True, BLACK)
+            screen.blit(text_surface, (50, 200 + i * 50))
+        
+        for i, box in enumerate(input_boxes):
+            pygame.draw.rect(screen, LIGHT_BLUE, box)
+            truncated_text = user_texts[i]
+            while font.size(truncated_text)[0] > box.width - 10:
+                truncated_text = truncated_text[:-1]
+            text_surface = font.render(truncated_text, True, BLACK)
+            screen.blit(text_surface, (box.x + 5, box.y + 5))
+        
+        pygame.draw.rect(screen, LIGHT_BLUE, next_button_rect)
+        next_text_surface = font.render("Next", True, BLACK)
+        next_text_rect = next_text_surface.get_rect(center = next_button_rect.center)
+        screen.blit(next_text_surface, next_text_rect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if next_button_rect.collidepoint(event.pos):
+                    try:
+                        num_ships = int(user_texts[0])
+                        if num_ships < 1 or num_ships > 5:
+                            raise ValueError("Number of ships must be between 1 and 5.")
+                        if not user_texts[1].isalpha():
+                            raise ValueError("Player name must be a string.")
+                        if user_texts[2].lower() not in ["easy", "medium", "hard"]:
+                            raise ValueError("AI difficulty must be 'easy', 'medium', or 'hard'.")
+                        print("Next Clicked!")
+                        return num_ships, user_texts[1], user_texts[2].lower()
+                    except ValueError as err:
+                        print(err)
+                
+                for i, box in enumerate(input_boxes):
+                    if box.collidepoint(event.pos):
+                        active_box = i
+                        break
+            
+            if event.type == pygame.KEYDOWN and active_box is not None:
+                if event.key == pygame.K_BACKSPACE:
+                    user_texts[active_box] = user_texts[active_box][:-1]
+                else:
+                    user_texts[active_box] += event.unicode
+        pygame.display.update()
+
 def switch_player_screen(screen):
     """
     The function `switch_player_screen` creates a screen with a "Next" button and waits for the button
@@ -267,6 +339,90 @@ def end_game(screen, winner: Player):
 
         # Update the display
         pygame.display.update()
+
+
+def select_game_mode(screen): #choose if you want to play against an ai or another player
+    """
+    Displays a screen for selecting either single-player or multiplayer mode.
+    
+    :param screen: The game screen where the game mode selection is displayed.
+    :return: Returns 'single' if the player selects single-player mode, otherwise 'multi'.
+    """
+    sp_button_rect = pygame.Rect(0, 0, 200, 80) #rectangle for single player button
+    mp_button_rect = pygame.Rect(0, 0, 200, 80) #rectangle for multi player button
+
+    #position the two buttons
+    sp_button_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)
+    mp_button_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100)
+
+    while True:
+        screen.fill(BACKGROUND_COLOR) #fill background
+        draw_title(screen, "Select Game Mode", title_font) #draw title
+
+        #draw buttons
+        draw_button(screen, "Single Player", sp_button_rect, font)
+        draw_button(screen, "Multiplayer", mp_button_rect, font)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: #if player x's out of window at any point, exit the game
+                pygame.quit()
+                sys.exit()
+            
+            if event.type == pygame.MOUSEBUTTONDOWN: #if player clicks down
+                if sp_button_rect.collidepoint(event.pos): #if player clicks on single player, return single
+                    print("Single Player selected")
+                    return "single"
+                elif mp_button_rect.collidepoint(event.pos): #if player clicks on multi player, return multi
+                    print("Multiplayer selected")
+                    return "multi"
+        
+        pygame.display.update()
+
+
+def select_ai_difficulty(screen):
+    """
+    Displays a screen for selecting AI difficulty level (easy, medium, hard).
+    
+    :param screen: The game screen where the AI difficulty selection is displayed.
+    :return: Returns 'easy', 'medium', or 'hard' based on player's choice.
+    """
+    ebutton_rect = pygame.Rect(0, 0, 200, 80) #rectangle for easy difficulty button
+    mbutton_rect = pygame.Rect(0, 0, 200, 80) #rectangle for medium difficulty button
+    hbutton_rect = pygame.Rect(0, 0, 200, 80) #rectangle for hard difficulty button
+
+    #positions buttons
+    ebutton_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 100)
+    mbutton_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+    hbutton_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100)
+
+    while True:
+        screen.fill(BACKGROUND_COLOR) #fill background 
+        draw_title(screen, "Select AI Difficulty", title_font) #display title
+
+        #draw the three buttons
+        draw_button(screen, "Easy", ebutton_rect, font)
+        draw_button(screen, "Medium", mbutton_rect, font)
+        draw_button(screen, "Hard", hbutton_rect, font)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: #if player x's out of window at any point, exit the game
+                pygame.quit()
+                sys.exit()
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if ebutton_rect.collidepoint(event.pos):
+                    print("Easy AI selected")
+                    return "easy"
+                elif mbutton_rect.collidepoint(event.pos):
+                    print("Medium AI selected")
+                    return "medium"
+                elif hbutton_rect.collidepoint(event.pos):
+                    print("Hard AI selected")
+                    return "hard"
+            
+        pygame.display.update()
+
+
         
 if __name__ == "__main__":
     start_game()
