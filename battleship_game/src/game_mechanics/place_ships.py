@@ -5,6 +5,8 @@ from ..board_mechanics.board import Board  # Import the Board class from backend
 from ..board_mechanics.piece import Piece  # Import the Piece class from backend
 from ..board_mechanics.player import Player
 from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE, BLACK, RED, GREEN, LIGHT_BLUE, FONT_NAME, FONT_SIZE
+from ..ai.ai import AI
+import random
 
 
 """
@@ -145,7 +147,7 @@ def ship_placement(screen, player: Player) -> None:
 
     # `current_piece = player.takeSmallestPiece()` is assigning the smallest available piece from the
     # player's remaining unplaced pieces to the variable `current_piece`.
-    current_piece = player.takeSmallestPiece() 
+    current_piece = player.takeSmallestPiece()
     while current_piece:
         # The code snippet `screen.fill(WHITE)`, `draw_grid()`, `draw_placed_ships()`, and
         # `draw_labels()` is responsible for setting up the initial display for the Battleship game
@@ -157,13 +159,33 @@ def ship_placement(screen, player: Player) -> None:
         draw_instructions()
 
 
-     
        
         # This block of code is handling the interactive ship placement process in a Battleship game
         # using Pygame. Here's a breakdown of what each part is doing:
         mouse_pos = pygame.mouse.get_pos()
 
         current_ship_preview = preview_ship(mouse_pos, current_piece)
+
+        if isinstance(player, AI): #if player is AI
+            while True:
+                current_piece = player.takeSmallestPiece()
+                if current_piece is None:
+                    print(f"{player.getName()} has placed all ships!")
+                    break
+                
+                #choose random coordinates and orientations for ships
+                x = random.randint(0, cols - 1)
+                y = random.randint(0, rows - 1)
+                orientation = random.choice(["horizontal", "vertical"])
+
+                if orientation == "horizontal":
+                    ship_cells = [(x + i, y) for i in range(current_piece.columns())]
+                else:
+                    ship_cells = [(x, y + i) for i in range(current_piece.rows())]
+                
+                if valid_placement(ship_cells): #if placement valid
+                    board.addPiece(current_piece, x, y) #add piece to board
+                    placed_ships.append((current_piece.columns(), ship_cells)) #track placed ship in backend
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
