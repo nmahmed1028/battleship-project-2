@@ -18,10 +18,11 @@ Methods:
 # modules or packages. Here's what each import statement is doing:
 import pygame
 from .config import BLACK, WHITE
-from .ui import start_game, game_setup, switch_player_screen, end_game
+from .ui import start_game, game_setup, switch_player_screen, end_game, select_game_mode, select_ai_difficulty, single_player_setup
 from .board_mechanics.player import Player
 from .game_mechanics.place_ships import ship_placement
 from .game_mechanics.attack import Attack
+from .ai.ai import EasyAI, MediumAI, HardAI
 
 class Game:
     def __init__(self, screen):
@@ -48,10 +49,25 @@ class Game:
         start_game(self.screen)
         self.state = "GAME_SETUP"  # Transition to the game setup state
 
-        # Game setup
-        self.num_ships, player1_name, player2_name = game_setup(self.screen)
-        self.player1 = Player(player1_name, self.num_ships)
-        self.player2 = Player(player2_name, self.num_ships)
+        game_mode = select_game_mode(self.screen) #select game mode (single or multi)
+        if game_mode == "single":
+            #difficulty = select_ai_difficulty(self.screen) #select ai difficulty
+            self.num_ships, player_name, difficulty = single_player_setup(self.screen) #sets up human player
+            self.player1 = Player(player_name, self.num_ships)
+
+            #initialize player 2 as ai based on chosen difficulty
+            if difficulty == "easy":
+                self.player2 = EasyAI(self.num_ships)
+            elif difficulty == "medium":
+                self.player2 = MediumAI(self.num_ships)
+            elif difficulty == "hard": 
+                self.player2 = HardAI(self.num_ships, self.player1.board)
+
+        else: #multiplayer setup
+            self.num_ships, player1_name, player2_name = game_setup(self.screen)
+            self.player1 = Player(player1_name, self.num_ships)
+            self.player2 = Player(player2_name, self.num_ships)
+
         self.state = "SHIP_PLACEMENT"  # Transition to the ship placement state
 
         # Ship placement
