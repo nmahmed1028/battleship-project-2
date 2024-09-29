@@ -42,7 +42,8 @@ async def main():
     game = Game(screen)
 
     # Run the initial game setup (start screen)
-    future = asyncio.run_coroutine_threadsafe(init_voice_engine(), loop)
+    # future = asyncio.run_coroutine_threadsafe(init_voice_engine(), loop)
+    await init_voice_engine()
     game.run()
 
 if __name__ == "__main__":
