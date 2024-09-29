@@ -199,7 +199,7 @@ def single_player_setup(screen):
     input_boxes = [
         pygame.Rect(380, 200, 140, 40), #how many ships text box
         pygame.Rect(380, 250, 140, 40), #player name text box
-        pygame.Rect(380, 300, 140, 40) #ai difficulty text box
+        pygame.Rect(580, 300, 140, 40) #ai difficulty text box
     ]
 
     next_button_rect = pygame.Rect(250, 350, 100, 50)
@@ -352,7 +352,7 @@ def select_game_mode(screen): #choose if you want to play against an ai or anoth
     mp_button_rect = pygame.Rect(0, 0, 200, 80) #rectangle for multi player button
 
     #position the two buttons
-    sp_button_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)
+    sp_button_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 100)
     mp_button_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100)
 
     while True:
