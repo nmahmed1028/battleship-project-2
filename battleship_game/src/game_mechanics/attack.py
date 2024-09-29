@@ -13,12 +13,13 @@
 import pygame 
 import sys
 import time
+import random as rand
 from enum import Enum
 from ..board_mechanics.board import Board # Import the Board class from backend
 from ..board_mechanics.player import Player # Import the Piece class from backend
 from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, BLACK, RED, GREEN, BLUE, GRAY, DARK_GRAY, PLAYER_BOARD_OFFSET_X, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, BUTTON_RECT, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
 from ..ui import switch_player_screen
-from ..ai.ai import AI, HardAI, MediumAI
+from ..ai.ai import AI, HardAI, MediumAI, EasyAI
 
 class AttackResult(Enum):
     HIT = 1
@@ -139,8 +140,11 @@ class Attack:
                 # check if ships sunk
                 if defender.board.getTile(x, y).getPiece().isSunk():
                     attacker.last_hits = None
-            
             self.show_popup("AI hit", 1)
+            if defender.board.getTile(x, y).getPiece().isSunk(): # Same as checking hits for med, but applies dialogue for all AI
+                self.show_dialogue_sink(attacker, 1) # Ship sink dialogue
+            else: 
+                self.show_dialogue_hit(attacker,1) # Ship hit dialogue
             if attacker is self.player1:
                 self.player1_score += 1
             else:
@@ -151,6 +155,7 @@ class Attack:
                 if attacker.last_hits is not None:
                     attacker.last_hits.append((x, y, False))
             self.show_popup("AI miss", 1)
+            self.show_dialogue_miss(attacker,1) # Miss dialogue
             return False
 
     def attack(self, attacker: Player, defender: Player)  -> bool:
@@ -207,6 +212,41 @@ class Attack:
     def show_popup(self, message, duration)  -> None:
         """Show a temporary popup message."""
         self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 100, self.font, RED)
+        pygame.display.update()
+        time.sleep(duration)
+
+    def show_dialogue_hit(self, attacker: AI, duration)  -> None:
+        """Show a temporary popup message."""
+        message = attacker.dialogue_hit[rand.randrange(0,len(attacker.dialogue_hit))]
+        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 125, self.font, DARK_GRAY)
+        pygame.display.update()
+        time.sleep(duration)
+
+    def show_dialogue_sink(self, attacker: AI, duration) -> None:
+        """Show a temporary popup message."""
+        message = attacker.dialogue_sink[rand.randrange(0,len(attacker.dialogue_hit))]
+        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 125, self.font, DARK_GRAY)
+        pygame.display.update()
+        time.sleep(duration)
+    
+    def show_dialogue_miss(self, attacker: AI, duration) -> None:
+        """Show a temporary popup message."""
+        message = attacker.dialogue_miss[rand.randrange(0,len(attacker.dialogue_hit))]
+        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 125, self.font, DARK_GRAY)
+        pygame.display.update()
+        time.sleep(duration)
+
+    def show_dialogue_win(self, attacker: AI, duration) -> None:
+        """Show a temporary popup message."""
+        message = attacker.dialogue_win[rand.randrange(0,len(attacker.dialogue_hit))]
+        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 125, self.font, DARK_GRAY)
+        pygame.display.update()
+        time.sleep(duration)
+
+    def show_dialogue_lose(self, attacker: AI, duration) -> None:
+        """Show a temporary popup message."""
+        message = attacker.dialogue_lose[rand.randrange(0,len(attacker.dialogue_hit))]
+        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 125, self.font, DARK_GRAY)
         pygame.display.update()
         time.sleep(duration)
 
