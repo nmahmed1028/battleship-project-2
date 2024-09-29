@@ -239,14 +239,14 @@ class Attack:
     def show_dialogue_win(self, attacker: AI, duration) -> None:
         """Show a temporary popup message."""
         message = attacker.dialogue_win[rand.randrange(0,len(attacker.dialogue_hit))]
-        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 125, self.font, DARK_GRAY)
+        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 150, self.font, RED)
         pygame.display.update()
         time.sleep(duration)
 
     def show_dialogue_lose(self, attacker: AI, duration) -> None:
         """Show a temporary popup message."""
         message = attacker.dialogue_lose[rand.randrange(0,len(attacker.dialogue_hit))]
-        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 125, self.font, DARK_GRAY)
+        self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 150, self.font, RED)
         pygame.display.update()
         time.sleep(duration)
 
@@ -273,6 +273,8 @@ class Attack:
                     break
         
             if player1_won:
+                if isinstance(self.player2, AI): # Shows dialogue for when AI loses
+                    self.show_dialogue_lose(self.player2,3)
                 break
             if not isinstance(self.player2, AI):
                 switch_player_screen(self.screen)
@@ -289,6 +291,8 @@ class Attack:
                     break
             
             if player2_won:
+                if isinstance(self.player2, AI): # Shows Dialogue for when AI wins
+                    self.show_dialogue_win(self.player2, 3)
                 break
             if not isinstance(self.player2, AI):
                 switch_player_screen(self.screen)

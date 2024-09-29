@@ -104,7 +104,7 @@ class HardAI(AI):
         super().__init__("AI-ham", numberOfShips)
         self.known_targets = [] #stores locations that have ships in them
         self.dialogue_hit = hard_hit
-        self.dialoge_sink = hard_sink
+        self.dialogue_sink = hard_sink
         self.dialogue_win = hard_win
         self.dialogue_lose = hard_lose
     
