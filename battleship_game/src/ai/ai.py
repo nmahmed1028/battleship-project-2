@@ -18,23 +18,6 @@ class AI(Player): #initialize AI as a Player object so it can play like one
         print(f"attack at {(chr(ord('A') + x)), y+1}")
         return x, y
 
-    '''def difficulty_level(self, player_board): #takes in player's ship board for hard difficulty
-        if self.difficulty == "easy":
-            #select random square and attack
-            pass
-        elif self.difficulty == "medium":
-            #same as easy but check if it hit something
-            #if it did then attack in orthogonally adjacent spaces to find other hits
-            pass
-        elif self.difficulty == "hard":
-            #picks a player ship and hits it
-            #attacks same ship till sunk then moves to another one
-            #might be easier to go in order of smallest to biggest 
-            pass
-        else:
-            raise ValueError("Invalid input")'''
-    
-
 class EasyAI(AI):
     def __init__(self, numberOfShips: int) -> None:
         super().__init__("Easy AI", numberOfShips)
