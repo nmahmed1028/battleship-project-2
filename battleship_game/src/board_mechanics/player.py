@@ -18,6 +18,7 @@ Player:
             Returns the player's name as a string representation of the player.
 """
 
+import copy
 from .piece import Piece
 from typing import List
 from .board import Board
@@ -39,7 +40,7 @@ class Player:
         self.name = name
         # Take numberOfShips elements from the end of STARTING_PIECES
         # These will be the smallest pieces in the list
-        self.unplacedPieces = STARTING_PIECES[len(STARTING_PIECES) - numberOfShips:]
+        self.unplacedPieces = copy.deepcopy(STARTING_PIECES[len(STARTING_PIECES) - numberOfShips:])
         self.board = Board()
 
     # Take the smallest piece (out of 5 long pieces) and return it

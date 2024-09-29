@@ -79,7 +79,6 @@ class Piece:
 
     # Mark the piece as hit
     def hit(self) -> None:
-        # TODO: bug, sometimes counts as hit twice
         self.hits += 1
 
     # Check if the piece is sunk

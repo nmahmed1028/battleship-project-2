@@ -70,7 +70,6 @@ class HardAI(AI):
                     self.known_targets.append((x, y)) #if so, add location to known targets
 
     def attack_pattern(self, opponent_board: Board):
-        print(self.known_targets)
         for x, y in self.known_targets: #only iterates through known targets
             if not opponent_board.getTile(x, y).isHit(): #if position isn't hit yet
                 print(f"attack at {(chr(ord('A') + x)), y+1}")
