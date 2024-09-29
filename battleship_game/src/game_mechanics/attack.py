@@ -149,6 +149,7 @@ class Attack:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     # Attack opponent's board
                     hit = self.handle_attack(defender.board, event.pos, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y)
+                    self.draw_grid(defender.board, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, hide_ships=True)
                     if hit == AttackResult.HIT:
                         self.show_popup("Hit! You get another turn.", 1)
                         # update scores
