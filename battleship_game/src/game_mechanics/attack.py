@@ -19,6 +19,11 @@ from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, 
 from ..ui import switch_player_screen
 from ..ai.ai import AI
 
+class AttackResult(Enum):
+    HIT = 1
+    ALREADY_HIT = 2
+    MISS = 3
+    INVALID = 4
 
 # Define Attack class
 # The `Attack` class in Python handles player attacks on opponent boards, manages game flow, and
@@ -72,14 +77,21 @@ class Attack:
             row_label = str(y + 1)  # Convert y to number (1, 2, 3,...)
             self.draw_text(row_label, offset_x - 20, offset_y + (y + 0.5) * self.cell_size, self.label_font)
 
-    def handle_attack(self, board: Board, pos, offset_x: int, offset_y: int) -> bool:
+    def handle_attack(self, board: Board, pos, offset_x: int, offset_y: int) -> AttackResult:
         """Handle player's attack on the opponent's board."""
         x = (pos[0] - offset_x) // self.cell_size
         y = (pos[1] - offset_y) // self.cell_size
         if 0 <= x < COLS and 0 <= y < ROWS:
             if not board.getTile(x, y).isHit():
-                return board.hit(x, y)  # Return hit or miss result
-        return False  # Invalid or already hit
+                res = board.hit(x, y)  # Return hit or miss result
+                if res:
+                    return AttackResult.HIT
+                else:
+                    return AttackResult.MISS
+            else:
+                return AttackResult.ALREADY_HIT
+        else:
+            return AttackResult.INVALID
 
     def draw_text(self, text, x, y, font, color=BLACK) -> None:
         """Draw text on the screen."""
@@ -137,7 +149,7 @@ class Attack:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     # Attack opponent's board
                     hit = self.handle_attack(defender.board, event.pos, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y)
-                    if hit:
+                    if hit == AttackResult.HIT:
                         self.show_popup("Hit! You get another turn.", 1)
                         # update scores
                         if attacker is self.player1:
@@ -146,9 +158,13 @@ class Attack:
                             self.player2_score += 1
 
                         return True
-                    else:
+                    elif hit == AttackResult.MISS:
                         self.show_popup("Miss! Turn over.", 1)
                         return False  # End attack, no hit
+                    elif hit == AttackResult.ALREADY_HIT:
+                        print("Already hit!")
+                    elif hit == AttackResult.INVALID:
+                        print("Invalid attack!")
 
             pygame.display.update()
 
