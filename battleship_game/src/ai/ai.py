@@ -14,6 +14,7 @@ class AI(Player): #initialize AI as a Player object so it can play like one
             y = random.randint(0, ROWS - 1)
             if not opponent_board.getTile(x, y).isHit():
                 valid_move = True
+        print(f"attack at {x, y}")
         return x, y
 
     '''def difficulty_level(self, player_board): #takes in player's ship board for hard difficulty
@@ -42,7 +43,7 @@ class EasyAI(AI):
 
 
 class MediumAI(AI):
-    def __init__(self, name: str, numberOfShips: int) -> None:
+    def __init__(self, numberOfShips: int) -> None:
         super().__init__("Medium AI", numberOfShips)
         self.last_hit = None
     
@@ -51,12 +52,13 @@ class MediumAI(AI):
             x, y = self.last_hit
             for i, j in [(-1, 0), (1, 0), (0, -1), (0, 1)]: #checking orthogonal positions
                 newx, newy = x + i, y + j
-                if 0 <= newx < COLS and 0 <= newy < ROWS and not opponent_board.getTile(newx, newy).isHit(): #if position is valid and not hit
+                if 0 <= newx < COLS and 0 <= newy < ROWS and not opponent_board.getTile(newx, newy).isHit(): #if position is valid and not already hit
+                    print(f"attack at {newx, newy}")
                     return newx, newy
         return super().attack_pattern(opponent_board) #else default to normal attack pattern (random attack)
     
 class HardAI(AI):
-    def __init__(self, name: str, numberOfShips: int, opponent_board: Board) -> None:
+    def __init__(self, numberOfShips: int, opponent_board: Board) -> None:
         super().__init__("AI-ham", numberOfShips)
         self.known_targets = [] #stores locations that have ships in them
 
@@ -68,5 +70,6 @@ class HardAI(AI):
     def attack_pattern(self, opponent_board: Board):
         for x, y in self.known_targets: #only iterates through known targets
             if not opponent_board.getTile(x, y).isHit(): #if position isn't hit yet
+                print(f"attack at {x, y}")
                 return x, y
         
