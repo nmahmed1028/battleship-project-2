@@ -18,7 +18,7 @@ from ..board_mechanics.board import Board # Import the Board class from backend
 from ..board_mechanics.player import Player # Import the Piece class from backend
 from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, BLACK, RED, GREEN, BLUE, GRAY, DARK_GRAY, PLAYER_BOARD_OFFSET_X, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, BUTTON_RECT, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
 from ..ui import switch_player_screen
-from ..ai.ai import AI, MediumAI
+from ..ai.ai import AI, HardAI, MediumAI
 
 class AttackResult(Enum):
     HIT = 1
@@ -122,8 +122,10 @@ class Attack:
         # Draw scores
         self.draw_scores()
         pygame.display.update()
-        time.sleep(1)
+        time.sleep(0.5)
 
+        if isinstance(attacker, HardAI):
+            attacker.update_targets(defender.board)
         x, y = attacker.attack_pattern(defender.board)
         hit = self.handle_attack(defender.board, (x * self.cell_size + OPPONENT_BOARD_OFFSET_X, y * self.cell_size + BOARD_OFFSET_Y), OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y)
         self.draw_grid(defender.board, PLAYER_BOARD_OFFSET_X, BOARD_OFFSET_Y)
@@ -138,14 +140,14 @@ class Attack:
                 if defender.board.getTile(x, y).getPiece().isSunk():
                     attacker.last_hits = None
             
-            self.show_popup("ai hit", 1)
+            self.show_popup("AI hit", 1)
             if attacker is self.player1:
                 self.player1_score += 1
             else:
                 self.player2_score += 1
             return True
         else:
-            self.show_popup("ai miss", 1)
+            self.show_popup("AI miss", 1)
             return False
 
     def attack(self, attacker: Player, defender: Player)  -> bool:

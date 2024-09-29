@@ -61,13 +61,16 @@ class HardAI(AI):
     def __init__(self, numberOfShips: int, opponent_board: Board) -> None:
         super().__init__("AI-ham", numberOfShips)
         self.known_targets = [] #stores locations that have ships in them
-
+    
+    def update_targets(self, opponent_board: Board):
+        self.known_targets = []
         for x in range(ROWS): #iterate through opponent board
             for y in range(COLS):
                 if opponent_board.getTile(x, y).getPiece(): #check if ship at location
                     self.known_targets.append((x, y)) #if so, add location to known targets
-    
+
     def attack_pattern(self, opponent_board: Board):
+        print(self.known_targets)
         for x, y in self.known_targets: #only iterates through known targets
             if not opponent_board.getTile(x, y).isHit(): #if position isn't hit yet
                 print(f"attack at {(chr(ord('A') + x)), y+1}")
