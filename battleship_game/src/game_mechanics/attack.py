@@ -194,6 +194,8 @@ class Attack:
                 if(player1_won):
                     break
         
+            if player1_won:
+                break
             switch_player_screen(self.screen)
 
             # Player 2's turn to attack Player 1
@@ -204,6 +206,8 @@ class Attack:
                 if(player2_won):
                     break
             
+            if player2_won:
+                break
             switch_player_screen(self.screen)
 
         return self.player1 if player1_won else self.player2
