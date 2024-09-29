@@ -11,13 +11,25 @@ Usage:
     Run this module directly to start the Battleship game.
 """
 
+import asyncio
+from threading import Thread
 import pygame
 from .config import SCREEN_WIDTH, SCREEN_HEIGHT
 from .game import Game
 # this import is required to make relative imports work in tests
 from . import tests
+from .ai.voice import init_voice_engine
 
-def main():
+loop = asyncio.new_event_loop()
+running = True
+def side_thread(loop):
+    asyncio.set_event_loop(loop)
+    loop.run_forever()
+
+thread = Thread(target=side_thread, args=(loop,), daemon=True)
+thread.start()
+
+async def main():
     """
     The `main` function initializes a Pygame window for a Battleship game and runs the initial game
     setup.
@@ -30,7 +42,8 @@ def main():
     game = Game(screen)
 
     # Run the initial game setup (start screen)
+    future = asyncio.run_coroutine_threadsafe(init_voice_engine(), loop)
     game.run()
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

@@ -7,7 +7,9 @@ It imports the `main` function from the `battleship_game.src.main` module and ex
 Usage:
     python run_game.py
 """
+
+import asyncio
 from battleship_game.src.main import main
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

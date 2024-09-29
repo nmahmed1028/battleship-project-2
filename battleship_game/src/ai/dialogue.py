@@ -13,7 +13,7 @@ med_win = ["Good game!", "Victory is mine!", "Lets gooooooooo", "GG"]
 med_lose = ["Ah man. Good job though", "Well played", "Congrats", "Shoot, oh well"]
 
 #dialogue pool for hard ai
-#hard_miss = [] hard never misses
+hard_miss = [] # hard never misses
 hard_hit = ["PREDICTABLE. ANOTHER HIT", "WAS THAT SUPPOSED TO FOOL ME?", "ARE YOU PLAYING TO LOSE?", "YOU'RE PLAYING A LOSING GAME, I SEE THIS NOW"]
 hard_sink = ["ANOTHER PATHETIC SHIP GONE", "HOW EMBARRASSING FOR YOU", "YOUR STRATEGY IS AMUSINGLY BAD", "DID YOU REALLY BELIEVE THAT WOULD WORK?"]
 hard_win = ["WAS THERE EVER ANY OTHER OUTCOME?", "YOU NEVER STOOD A CHANCE", "WHAT A WASTE OF MY PROCESSING POWER", "AS EXPECTED"]
