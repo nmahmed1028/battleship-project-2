@@ -133,9 +133,9 @@ class Attack:
         if hit == AttackResult.HIT:
             if isinstance(attacker, MediumAI):
                 if attacker.last_hits is None:
-                    attacker.last_hits = [(x, y)]
+                    attacker.last_hits = [(x, y, True)]
                 else:
-                    attacker.last_hits.append((x, y))
+                    attacker.last_hits.append((x, y, True))
                 # check if ships sunk
                 if defender.board.getTile(x, y).getPiece().isSunk():
                     attacker.last_hits = None
@@ -147,6 +147,9 @@ class Attack:
                 self.player2_score += 1
             return True
         else:
+            if isinstance(attacker, MediumAI):
+                if attacker.last_hits is not None:
+                    attacker.last_hits.append((x, y, False))
             self.show_popup("AI miss", 1)
             return False
 

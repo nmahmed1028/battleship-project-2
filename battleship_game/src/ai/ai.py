@@ -49,12 +49,43 @@ class MediumAI(AI):
     
     def attack_pattern(self, opponent_board: Board):
         if self.last_hits: #if 
-            x, y = self.last_hits[-1]
-            for i, j in [(-1, 0), (1, 0), (0, -1), (0, 1)]: #checking orthogonal positions
-                newx, newy = x + i, y + j
-                if 0 <= newx < COLS and 0 <= newy < ROWS and not opponent_board.getTile(newx, newy).isHit(): #if position is valid and not already hit
-                    print(f"attack at {newx, newy}")
-                    return newx, newy
+            x, y, hit = self.last_hits[-1]
+            if len(self.last_hits) > 1: #if there's more than one hit
+                x2, y2, hit2 = self.last_hits[-2]
+                newx = x
+                newy = y
+                walkRow = x2 == x
+                backwards = not hit
+                max_attempts = 10  # Maximum number of attempts before giving up
+                attempt = 0
+                while attempt < max_attempts:
+                    if backwards:
+                        if walkRow:
+                            newy = newy - 1 if y2 < y else newy + 1
+                        else:
+                            newx = newx - 1 if x2 < x else newx + 1
+                    else: 
+                        if walkRow:
+                            newy = newy + 1 if y2 < y else newy - 1
+                        else:
+                            newx = newx + 1 if x2 < x else newx - 1
+                    
+                    if (0 <= newx < COLS and 0 <= newy < ROWS) and not opponent_board.getTile(newx, newy).isHit():
+                        print(f"attack at {(chr(ord('A') + newx)), newy+1}")
+                        return newx, newy
+                    elif not (0 <= newx < COLS and 0 <= newy < ROWS):
+                        backwards = not backwards
+                    
+                    attempt += 1
+                
+                # If we've exhausted all attempts, fall back to random attack
+                return super().attack_pattern(opponent_board)
+            else:
+                for i, j in [(-1, 0), (1, 0), (0, -1), (0, 1)]: #checking orthogonal positions
+                    newx, newy = x + i, y + j
+                    if 0 <= newx < COLS and 0 <= newy < ROWS and not opponent_board.getTile(newx, newy).isHit(): #if position is valid and not already hit
+                        print(f"attack at {(chr(ord('A') + newx)), newy+1}")
+                        return newx, newy
         return super().attack_pattern(opponent_board) #else default to normal attack pattern (random attack)
     
 class HardAI(AI):
