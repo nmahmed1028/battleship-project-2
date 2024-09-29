@@ -22,7 +22,7 @@ from .ui import start_game, game_setup, switch_player_screen, end_game, select_g
 from .board_mechanics.player import Player
 from .game_mechanics.place_ships import ship_placement
 from .game_mechanics.attack import Attack
-from .ai.ai import EasyAI, MediumAI, HardAI
+from .ai.ai import AI, EasyAI, MediumAI, HardAI
 
 class Game:
     def __init__(self, screen):
@@ -73,9 +73,11 @@ class Game:
         # Ship placement
         print(f"Placing {self.num_ships} ships for, {self.player1}, and {self.player2}")
         ship_placement(self.screen, self.player1)
-        switch_player_screen(self.screen)
+        if not isinstance(self.player2, AI):
+            switch_player_screen(self.screen)
         ship_placement(self.screen, self.player2)
-        switch_player_screen(self.screen)
+        if not isinstance(self.player2, AI):
+            switch_player_screen(self.screen)
         print("both players have placed their ships")
         self.state = "MAIN_GAME"  # Transition to the main game state
         pygame.display.set_caption("Let's Play!")  # Dynamic caption
