@@ -142,12 +142,45 @@ def ship_placement(screen, player: Player) -> None:
 
         return preview_cells
 
-    
+
+    if isinstance(player, AI): #if player is AI
+        screen.fill(WHITE)
+        pygame.display.update()
+        while True:
+            current_piece = player.takeSmallestPiece()
+            print(f"Current Piece: {current_piece}")
+            print(f"Remaining Pieces: {player.unplacedPieces}")
+            if current_piece is None:
+                print(f"{player.getName()} has placed all ships!")
+                break
+            
+            #choose random coordinates and orientations for ships
+            x = random.randint(0, cols - 1)
+            y = random.randint(0, rows - 1)
+            orientation = random.choice(["horizontal", "vertical"])
+
+            if orientation == "horizontal":
+                ship_cells = [(x + i, y) for i in range(current_piece.columns())]
+            else:
+                ship_cells = [(x, y + i) for i in range(current_piece.rows())]
+            
+            if valid_placement(ship_cells): #if placement valid
+                board.addPiece(current_piece, x, y) #add piece to board
+                placed_ships.append((current_piece.columns(), ship_cells)) #track placed ship in backend
+                print(f"{player.getName()} Placed Ships:", placed_ships)
+        print("Current Board State (AI):")
+        for row in board.grid:
+            print(['X' if tile.isHit() else ('P' if tile.getPiece() else '.') for tile in row])
+        print(f"{player.getName()} Placed Ships:", placed_ships)
+        print(f"{player.getName()} has placed all ships!")
+        return
 
 
     # `current_piece = player.takeSmallestPiece()` is assigning the smallest available piece from the
     # player's remaining unplaced pieces to the variable `current_piece`.
     current_piece = player.takeSmallestPiece()
+    print(f"Current Piece: {current_piece}")
+    print(f"Remaining Pieces: {player.unplacedPieces}")
     while current_piece:
         # The code snippet `screen.fill(WHITE)`, `draw_grid()`, `draw_placed_ships()`, and
         # `draw_labels()` is responsible for setting up the initial display for the Battleship game
@@ -165,27 +198,6 @@ def ship_placement(screen, player: Player) -> None:
         mouse_pos = pygame.mouse.get_pos()
 
         current_ship_preview = preview_ship(mouse_pos, current_piece)
-
-        if isinstance(player, AI): #if player is AI
-            while True:
-                current_piece = player.takeSmallestPiece()
-                if current_piece is None:
-                    print(f"{player.getName()} has placed all ships!")
-                    break
-                
-                #choose random coordinates and orientations for ships
-                x = random.randint(0, cols - 1)
-                y = random.randint(0, rows - 1)
-                orientation = random.choice(["horizontal", "vertical"])
-
-                if orientation == "horizontal":
-                    ship_cells = [(x + i, y) for i in range(current_piece.columns())]
-                else:
-                    ship_cells = [(x, y + i) for i in range(current_piece.rows())]
-                
-                if valid_placement(ship_cells): #if placement valid
-                    board.addPiece(current_piece, x, y) #add piece to board
-                    placed_ships.append((current_piece.columns(), ship_cells)) #track placed ship in backend
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

@@ -268,6 +268,7 @@ def switch_player_screen(screen):
     Pygame library. This surface represents the visible window or screen where graphics are displayed
     :return: The `switch_player_screen` function returns when the "Next" button is clicked.
     """
+    print("Switching players screen")
     # Define the "Next" button rectangle
     next_button_rect = pygame.Rect(0, 0, 100, 50)
     # Position the "Next" button at the bottom right corner with some padding

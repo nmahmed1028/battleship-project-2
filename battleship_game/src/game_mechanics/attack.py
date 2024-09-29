@@ -13,6 +13,7 @@
 import pygame 
 import sys
 import time
+from enum import Enum
 from ..board_mechanics.board import Board # Import the Board class from backend
 from ..board_mechanics.player import Player # Import the Piece class from backend
 from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, BLACK, RED, GREEN, BLUE, GRAY, DARK_GRAY, PLAYER_BOARD_OFFSET_X, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, BUTTON_RECT, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
@@ -104,6 +105,41 @@ class Attack:
         self.draw_text(f"{self.player1.getName()}: {self.player1_score}", 100, SCREEN_HEIGHT - 30, self.font)
         self.draw_text(f"{self.player2.getName()}: {self.player2_score}", SCREEN_WIDTH - 100, SCREEN_HEIGHT - 30, self.font)
 
+    def attack_ai(self, attacker: AI, defender: Player) -> bool:
+        """Handle AI's attack on the opponent's board."""
+        self.screen.fill(WHITE)
+
+        # Draw both boards
+        self.draw_grid(defender.board, PLAYER_BOARD_OFFSET_X, BOARD_OFFSET_Y)
+        self.draw_grid(attacker.board, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, hide_ships=True)
+
+        # Draw labels
+        self.draw_text("Your Hits", PLAYER_BOARD_OFFSET_X + (COLS * CELL_SIZE) // 2, BOARD_OFFSET_Y - 30, self.font)
+        self.draw_text("Your Attacks", OPPONENT_BOARD_OFFSET_X + (COLS * CELL_SIZE) // 2, BOARD_OFFSET_Y - 30, self.font)
+
+        self.draw_text(f"{attacker.getName()}'s Turn", SCREEN_WIDTH // 2, SCREEN_HEIGHT - 50, self.title_font)
+
+        # Draw scores
+        self.draw_scores()
+        pygame.display.update()
+        time.sleep(1)
+
+        x, y = attacker.attack_pattern(defender.board)
+        hit = self.handle_attack(defender.board, (x * self.cell_size + OPPONENT_BOARD_OFFSET_X, y * self.cell_size + BOARD_OFFSET_Y), OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y)
+        self.draw_grid(defender.board, PLAYER_BOARD_OFFSET_X, BOARD_OFFSET_Y)
+        self.draw_grid(attacker.board, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, hide_ships=True)
+        if hit == AttackResult.HIT:
+            # TODO: multiple hits
+            self.show_popup("ai hit", 1)
+            if attacker is self.player1:
+                self.player1_score += 1
+            else:
+                self.player2_score += 1
+            return True
+        else:
+            self.show_popup("ai miss", 1)
+            return False
+
     def attack(self, attacker: Player, defender: Player)  -> bool:
         """Main attack loop where one player attacks the other."""
 
@@ -124,20 +160,6 @@ class Attack:
 
             # Draw scores
             self.draw_scores()
-
-            if isinstance(attacker, AI): #if the attacker is the AI player, attack w/ custom attack pattern
-                x, y = attacker.attack_pattern(defender.board)
-                hit = self.handle_attack(defender.board, (x * self.cell_size + OPPONENT_BOARD_OFFSET_X, y * self.cell_size + BOARD_OFFSET_Y), OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y)
-                if hit:
-                    self.show_popup("ai hit", 1)
-                    if attacker is self.player1:
-                        self.player1_score += 1
-                    else:
-                        self.player2_score += 1
-                    return True
-                else:
-                    self.show_popup("ai miss", 1)
-                    return False
 
             # Handle events
             for event in pygame.event.get():
@@ -189,26 +211,34 @@ class Attack:
             # Player 1's turn to attack Player 2
             player1_turn = True
             while(player1_turn):
-                player1_turn = self.attack(self.player1, self.player2)
+                if isinstance(self.player1, AI):
+                    player1_turn = self.attack_ai(self.player1, self.player2)
+                else:
+                    player1_turn = self.attack(self.player1, self.player2)
                 player1_won = not self.player2.board.hasUnsunkShips()
                 if(player1_won):
                     break
         
             if player1_won:
                 break
-            switch_player_screen(self.screen)
+            if not isinstance(self.player2, AI):
+                switch_player_screen(self.screen)
 
             # Player 2's turn to attack Player 1
             player2_turn = True
             while(player2_turn):
-                player2_turn = self.attack(self.player2, self.player1)
+                if isinstance(self.player2, AI):
+                    player2_turn = self.attack_ai(self.player2, self.player1)
+                else:
+                    player2_turn = self.attack(self.player2, self.player1)
                 player2_won = not self.player1.board.hasUnsunkShips()
                 if(player2_won):
                     break
             
             if player2_won:
                 break
-            switch_player_screen(self.screen)
+            if not isinstance(self.player2, AI):
+                switch_player_screen(self.screen)
 
         return self.player1 if player1_won else self.player2
         
