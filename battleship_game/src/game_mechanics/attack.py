@@ -18,7 +18,7 @@ from ..board_mechanics.board import Board # Import the Board class from backend
 from ..board_mechanics.player import Player # Import the Piece class from backend
 from ..config import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ROWS, COLS, WHITE, BLACK, RED, GREEN, BLUE, GRAY, DARK_GRAY, PLAYER_BOARD_OFFSET_X, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, BUTTON_RECT, FONT_NAME, FONT_SIZE, TITLE_FONT_SIZE
 from ..ui import switch_player_screen
-from ..ai.ai import AI
+from ..ai.ai import AI, MediumAI
 
 class AttackResult(Enum):
     HIT = 1
@@ -129,7 +129,15 @@ class Attack:
         self.draw_grid(defender.board, PLAYER_BOARD_OFFSET_X, BOARD_OFFSET_Y)
         self.draw_grid(attacker.board, OPPONENT_BOARD_OFFSET_X, BOARD_OFFSET_Y, hide_ships=True)
         if hit == AttackResult.HIT:
-            # TODO: multiple hits
+            if isinstance(attacker, MediumAI):
+                if attacker.last_hits is None:
+                    attacker.last_hits = [(x, y)]
+                else:
+                    attacker.last_hits.append((x, y))
+                # check if ships sunk
+                if defender.board.getTile(x, y).getPiece().isSunk():
+                    attacker.last_hits = None
+            
             self.show_popup("ai hit", 1)
             if attacker is self.player1:
                 self.player1_score += 1

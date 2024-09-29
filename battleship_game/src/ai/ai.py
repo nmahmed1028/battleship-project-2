@@ -14,7 +14,7 @@ class AI(Player): #initialize AI as a Player object so it can play like one
             y = random.randint(0, ROWS - 1)
             if not opponent_board.getTile(x, y).isHit():
                 valid_move = True
-        print(f"attack at {x, y}")
+        print(f"attack at {(chr(ord('A') + x)), y+1}")
         return x, y
 
     '''def difficulty_level(self, player_board): #takes in player's ship board for hard difficulty
@@ -45,11 +45,11 @@ class EasyAI(AI):
 class MediumAI(AI):
     def __init__(self, numberOfShips: int) -> None:
         super().__init__("Medium AI", numberOfShips)
-        self.last_hit = None
+        self.last_hits = None
     
     def attack_pattern(self, opponent_board: Board):
-        if self.last_hit: #if 
-            x, y = self.last_hit
+        if self.last_hits: #if 
+            x, y = self.last_hits[-1]
             for i, j in [(-1, 0), (1, 0), (0, -1), (0, 1)]: #checking orthogonal positions
                 newx, newy = x + i, y + j
                 if 0 <= newx < COLS and 0 <= newy < ROWS and not opponent_board.getTile(newx, newy).isHit(): #if position is valid and not already hit
@@ -70,6 +70,6 @@ class HardAI(AI):
     def attack_pattern(self, opponent_board: Board):
         for x, y in self.known_targets: #only iterates through known targets
             if not opponent_board.getTile(x, y).isHit(): #if position isn't hit yet
-                print(f"attack at {x, y}")
+                print(f"attack at {(chr(ord('A') + x)), y+1}")
                 return x, y
         

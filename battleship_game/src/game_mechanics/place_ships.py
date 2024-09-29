@@ -168,6 +168,10 @@ def ship_placement(screen, player: Player) -> None:
                 board.addPiece(current_piece, x, y) #add piece to board
                 placed_ships.append((current_piece.columns(), ship_cells)) #track placed ship in backend
                 print(f"{player.getName()} Placed Ships:", placed_ships)
+            else:
+                print(f"Invalid placement for {current_piece}")
+                player.unplacedPieces.append(current_piece)
+
         print("Current Board State (AI):")
         for row in board.grid:
             print(['X' if tile.isHit() else ('P' if tile.getPiece() else '.') for tile in row])

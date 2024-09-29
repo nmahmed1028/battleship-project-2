@@ -40,6 +40,8 @@ class Piece:
     #  [True, True, True]]
     def __init__(self, shape: List[List[bool]]) -> None:
         self.shape = shape
+        self.size = sum(sum(row) for row in shape)
+        self.hits = 0
 
     # Returns the number of rows in the piece
     def rows(self) -> int:
@@ -74,6 +76,15 @@ class Piece:
                 # Each item is moved to the transposed index with the columns flipped
                 shape[x][rows - y - 1] = item
         return Piece(shape)
+
+    # Mark the piece as hit
+    def hit(self) -> None:
+        # TODO: bug, sometimes counts as hit twice
+        self.hits += 1
+
+    # Check if the piece is sunk
+    def isSunk(self) -> bool:
+        return self.size == self.hits
 
     # Check if two pieces are equal
     def __eq__(self, other):

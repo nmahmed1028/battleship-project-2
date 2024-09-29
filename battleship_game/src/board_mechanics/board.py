@@ -55,7 +55,10 @@ class Tile:
     
     # Mark the tile as hit 
     def markAsHit(self) -> None:
-        self.hit = True
+        if not self.hit:
+            self.hit = True
+            if not (self.piece is None):
+                self.piece.hit()
 
     # Check if the tile has been hit yet
     def isHit(self) -> bool:
@@ -71,7 +74,8 @@ class Board:
         for [yOffset, row] in enumerate(piece.shape):
             for [xOffset, item] in enumerate(row):
                 if item:
-                    self.getTile(x+xOffset, y+yOffset).addPiece(piece)
+                    if x+xOffset < 10 and y+yOffset < 10:
+                        self.getTile(x+xOffset, y+yOffset).addPiece(piece)
 
     # Check if placing a piece at a location would collide with other pieces
     def piecePlacementValid(self, piece: Piece, x: int, y: int) -> bool:
