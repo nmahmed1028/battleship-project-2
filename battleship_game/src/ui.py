@@ -331,12 +331,31 @@ def end_game(screen, winner: Player):
         winner_rect = winner_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
         # Display the "Player X Won" text
         screen.blit(winner_surface, winner_rect)
+        # Button that says play again
+        play_again_button_rect = pygame.Rect(0, 0, 200, 80)
+        play_again_button_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 150)
+        draw_button(screen, "Play Again", play_again_button_rect, font)
+        # Button that says exit
+        exit_button_rect = pygame.Rect(0, 0, 200, 80)
+        exit_button_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 250)
+        draw_button(screen, "Exit", exit_button_rect, font)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 # Quit the game
                 pygame.quit()
                 sys.exit()
+                return False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_again_button_rect.collidepoint(event.pos):
+                    print("Play Again Clicked!")
+                    return True
+                elif exit_button_rect.collidepoint(event.pos):
+                    print("Exit Clicked!")
+                    pygame.quit()
+                    sys.exit()
+                    return False
 
         # Update the display
         pygame.display.update()

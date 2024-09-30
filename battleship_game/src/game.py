@@ -16,9 +16,11 @@ Methods:
 
 # The `import` statements at the beginning of the code are used to bring in functionality from other
 # modules or packages. Here's what each import statement is doing:
+import asyncio
+import sys
 import pygame
-from .config import BLACK, WHITE
-from .ui import start_game, game_setup, switch_player_screen, end_game, select_game_mode, select_ai_difficulty, single_player_setup
+from .config import BLACK, WHITE, BACKGROUND_COLOR
+from .ui import start_game, game_setup, switch_player_screen, end_game, select_game_mode, select_ai_difficulty, single_player_setup, draw_title, title_font
 from .board_mechanics.player import Player
 from .game_mechanics.place_ships import ship_placement
 from .game_mechanics.attack import Attack
@@ -40,7 +42,7 @@ class Game:
         self.player1 = None
         self.player2 = None
 
-    def run(self):
+    def run(self, future, loop):
         """
         The function runs a turn-based battleship game with ship placement, attacks, and game over
         conditions.
@@ -82,10 +84,24 @@ class Game:
         self.state = "MAIN_GAME"  # Transition to the main game state
         pygame.display.set_caption("Let's Play!")  # Dynamic caption
 
+        # Wait for voice engine to initialize
+        if isinstance(self.player2, AI):
+            print("waiting for voice engine to initialize")
+            self.screen.fill(BACKGROUND_COLOR)
+            draw_title(self.screen, "Loading...", title_font)
+            pygame.display.flip()
+            future.result()
+
         # Attacks
         attack_system = Attack(self.screen, self.player1, self.player2)
         winner = attack_system.attack_simulation()
         self.state = "END_GAME"
-        end_game(self.screen, winner)
+        play_again = end_game(self.screen, winner)
         self.state = "GAME_OVER"
         print("Game over")
+
+        if play_again:
+            print("Play again")
+            self.state = "START_SCREEN"
+            pygame.display.set_caption("Battleship Game")
+            self.run(future, loop)

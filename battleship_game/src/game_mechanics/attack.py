@@ -123,8 +123,9 @@ class Attack:
 
         # Draw scores
         self.draw_scores()
+
         pygame.display.update()
-        time.sleep(0.5)
+        time.sleep(0.25)
 
         if isinstance(attacker, HardAI):
             attacker.update_targets(defender.board)
@@ -143,9 +144,9 @@ class Attack:
                     attacker.last_hits = None
             self.show_popup("AI hit", 1)
             if defender.board.getTile(x, y).getPiece().isSunk(): # Same as checking hits for med, but applies dialogue for all AI
-                self.show_dialogue_sink(attacker, 1) # Ship sink dialogue
+                self.show_dialogue_sink(attacker, 0.5) # Ship sink dialogue
             else: 
-                self.show_dialogue_hit(attacker,1) # Ship hit dialogue
+                self.show_dialogue_hit(attacker, 0.5) # Ship hit dialogue
             if attacker is self.player1:
                 self.player1_score += 1
             else:
@@ -156,7 +157,7 @@ class Attack:
                 if attacker.last_hits is not None:
                     attacker.last_hits.append((x, y, False))
             self.show_popup("AI miss", 1)
-            self.show_dialogue_miss(attacker,1) # Miss dialogue
+            self.show_dialogue_miss(attacker, 0.5) # Miss dialogue
             return False
 
     def attack(self, attacker: Player, defender: Player)  -> bool:
@@ -216,6 +217,14 @@ class Attack:
         pygame.display.update()
         time.sleep(duration)
 
+    def show_dialogue(self, attacker, dialogue) -> None:
+        if isinstance(attacker, HardAI):
+            text_to_speech(dialogue, "com.apple.speech.synthesis.voice.Hysterical", 3000)
+        elif isinstance(attacker, MediumAI):
+            text_to_speech(dialogue, "com.apple.voice.compact.en-IE.Moira")
+        else: # Easy AI
+            text_to_speech(dialogue, "com.apple.speech.synthesis.voice.Junior")
+
     def show_dialogue_hit(self, attacker: AI, duration)  -> None:
         """Show a temporary popup message."""
         dialogue = attacker.dialogue_hit[rand.randrange(0,len(attacker.dialogue_hit))]
@@ -224,7 +233,7 @@ class Attack:
         message += "\""
         self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 135, self.font, DARK_GRAY)
         pygame.display.update()
-        text_to_speech(dialogue) # TODO: Change voice
+        self.show_dialogue(attacker, dialogue)
         time.sleep(duration)
 
     def show_dialogue_sink(self, attacker: AI, duration) -> None:
@@ -235,7 +244,7 @@ class Attack:
         message += "\""
         self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 135, self.font, DARK_GRAY)
         pygame.display.update()
-        text_to_speech(dialogue) # TODO: Change voice
+        self.show_dialogue(attacker, dialogue)
         time.sleep(duration)
     
     def show_dialogue_miss(self, attacker: AI, duration) -> None:
@@ -246,7 +255,7 @@ class Attack:
         message += "\""
         self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 135, self.font, DARK_GRAY)
         pygame.display.update()
-        text_to_speech(dialogue) # TODO: Change voice
+        self.show_dialogue(attacker, dialogue)
         time.sleep(duration)
 
     def show_dialogue_win(self, attacker: AI, duration) -> None:
@@ -257,7 +266,7 @@ class Attack:
         message += "\""
         self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 150, self.font, RED)
         pygame.display.update()
-        text_to_speech(dialogue) # TODO: Change voice
+        self.show_dialogue(attacker, dialogue)
         time.sleep(duration)
 
     def show_dialogue_lose(self, attacker: AI, duration) -> None:
@@ -268,7 +277,7 @@ class Attack:
         message += "\""
         self.draw_text(message, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 150, self.font, RED)
         pygame.display.update()
-        text_to_speech(dialogue) # TODO: Change voice
+        self.show_dialogue(attacker, dialogue)
         time.sleep(duration)
 
     def attack_simulation(self) -> Player:
@@ -295,7 +304,7 @@ class Attack:
         
             if player1_won:
                 if isinstance(self.player2, AI): # Shows dialogue for when AI loses
-                    self.show_dialogue_lose(self.player2,3)
+                    self.show_dialogue_lose(self.player2,1)
                 break
             if not isinstance(self.player2, AI):
                 switch_player_screen(self.screen)
@@ -308,12 +317,16 @@ class Attack:
                 else:
                     player2_turn = self.attack(self.player2, self.player1)
                 player2_won = not self.player1.board.hasUnsunkShips()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
                 if(player2_won):
                     break
             
             if player2_won:
                 if isinstance(self.player2, AI): # Shows Dialogue for when AI wins
-                    self.show_dialogue_win(self.player2, 3)
+                    self.show_dialogue_win(self.player2, 1)
                 break
             if not isinstance(self.player2, AI):
                 switch_player_screen(self.screen)

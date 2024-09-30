@@ -19,8 +19,8 @@ async def init_voice_engine(): # defines async function
     print("Voice engine initialized") # print confirmation message
 
 # fucntion to convert text to speech using a specified voice
-def text_to_speech(text: str, voice_id: str = "com.apple.speech.synthesis.voice.Albert") -> None: # defines text to speeach functions
-    VOICE_ENGINE.setProperty("rate", WORDS_PER_MINUTE_RATE) # set speech rate to defined words per minute
+def text_to_speech(text: str, voice_id: str = "com.apple.speech.synthesis.voice.Albert", wpm: int = WORDS_PER_MINUTE_RATE) -> None: # defines text to speeach functions
+    VOICE_ENGINE.setProperty("rate", wpm) # set speech rate to defined words per minute
     VOICE_ENGINE.setProperty("voice", voice_id) # set the voice engine to use the specified voice id
 
     VOICE_ENGINE.say(text) # queue text for speech output
