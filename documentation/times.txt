@@ -2,11 +2,11 @@
 Time Estimates Per Person 
 
 Nayyir Ahmed
-    Programing: 6 hrs
+    Programing: 3 hrs
     Planning: 15 min
 
 Aiham Alhmoud
-    Carrying: all the time
+    Programing: 3 hrs
     Planning: 15 min
 
 Damien Mendez
@@ -14,12 +14,12 @@ Damien Mendez
     Planning: 15 min
 
 Ashley Aldave
-    Documentation: 6:00 hrs
+    Documentation: 6 hrs
     Programming: 30 min
     Planning: 15 min
 
 Dylan Davis
-    Documentation: 6:00 hrs
+    Documentation: 6 hrs
     Programming: 30 min 
     Planning: 15 min
 
@@ -63,7 +63,7 @@ Ashley Aldave
 Dylan Davis
     Planning: 15 min            11/18            Team Meeting Dicsussing project direction
     Planning: 30 min            11/25            Team Meeting Dicsussing project direction
+    Documentation: 3 hrs        11/29            Time and Structure documentation
     Programming: 30 min         11/29            Ai dialog
     Planning: 15 min            11/29            Online check in with progress
-
 '''
