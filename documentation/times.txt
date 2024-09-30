@@ -28,33 +28,42 @@ Dylan Davis
 Actual Time Worked              Date            Descritption of Work
 
 Nayyir Ahmed
-    Planning: 15 min
-    Programing: 6 hrs                               
-    Planning: 15 min
+    Planning: 15 min            11/18            Team Meeting Dicsussing project direction
+    Programming: 15 min         11/23            Added a skeleton for ai class
+    Planning: 30 min            11/25            Team Meeting Dicsussing project direction 
+    Programing: 1 hr            11/26            ai dialoge added  
+    Programing: 1 hr            11/27            ai classes added
+    Programing: 4 hr            11/28            Imports fixed                   
+    Planning: 15 min            11/29            Online check in with progress
 
 
 Aiham Alhmoud
-    Planning: 15 min
-    Programing: 6 hrs   
-    Planning: 15 min
+    Planning: 15 min            11/18            Team Meeting Dicsussing project direction
+    Planning: 30 min            11/25            Team Meeting Dicsussing project direction
+    Programing: 2 hrs           11/28                     
+    Programing: 6 hrs           11/29                 
+    Planning: 15 min            11/29            Online check in with progress
 
 
 Damien Mendez
-    Planning: 15 min
-    Programing: 6 hrs
-    Planning: 15 min
+    Planning: 15 min            11/18            Team Meeting Dicsussing project direction
+    Planning: 30 min            11/25            Team Meeting Dicsussing project direction
+    Programing: 2 hrs           11/29            Ai dialog and win loss dialog         
+    Planning: 15 min            11/29            Online check in with progress
 
 
 Ashley Aldave
-    Planning: 15 min
-    Documentation: 6:00 hrs
-    Programming: 30 min
-    Planning: 15 min
+    Planning: 15 min            11/18            Team Meeting Dicsussing project direction
+    Documentation: 1:00 hr      11/25                           UML diagram
+    Planning: 30 min            11/25            Team Meeting Dicsussing project direction
+    Programming: 30 min         11/29            Ai dialog
+    Planning: 15 min            11/29            Online check in with progress
 
 
 Dylan Davis
-    Documentation: 6:00 hrs
-    Programming: 30 min
-    Planning: 15 min
+    Planning: 15 min            11/18            Team Meeting Dicsussing project direction
+    Planning: 30 min            11/25            Team Meeting Dicsussing project direction
+    Programming: 30 min         11/29            Ai dialog
+    Planning: 15 min            11/29            Online check in with progress
 
 '''
