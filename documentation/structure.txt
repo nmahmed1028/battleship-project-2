@@ -10,7 +10,7 @@ Implementation of the AI
     Easy: It just fires randomly every turn, Medium: It fires randomly until it hits a ship then fires in orthogonally adjacent spaces to find other hits until a ship is sunk.
     Hard: Cheater, cheater pumpkin eater! This mode knows where all your ships are and lands a hit every turn.
     and that all the ai would begin with random ship placement 
-    for the implementation we used multiple classes for the AI, Easy AI, Medium AI, Hard AI, with different attack patterns based on how they are meant to preform.  
+    for the implementation we used multiple classes for the AI, Easy AI, Medium AI, Hard AI, with different attack patterns based on how they are meant to perform.  
 
 Custom Addition
     This is a new addition to the classic game of battleship. 
