@@ -1,1 +1,34 @@
 This file is for the structure and documentation of the code additions. 
+
+
+
+You must get all required functionality from Project 1 working, even if the team you inherited it
+from did not --- our project worked upon recieving it, so there was no work needed accieving the previous functionality. 
+
+Implementation of the AI
+    We were tasked with adding an AI component to the game, with three different difficulty levels. 
+    Easy: It just fires randomly every turn, Medium: It fires randomly until it hits a ship then fires in orthogonally adjacent spaces to find other hits until a ship is sunk.
+    Hard: Cheater, cheater pumpkin eater! This mode knows where all your ships are and lands a hit every turn.
+    and that all the ai would begin with random ship placement 
+Custom Addition
+    This is a new addition to the classic game of battleship. 
+    We decided to add personalities to the 3 AIs we were required to add, so they respond to you after every turn. 
+    the easiest AI speaks to you like a child, meduim AI speaks like an older more competent child. 
+    While the hardest AI speak to you like a gammer teenage, who uses too many pop culture refrences. 
+    All of the dialogue options are kept in 'dialogue.py', and 
+
+
+In addition to playing against a human, you will create an Artificial Intelligence (AI) opponent to
+play against. Requirements for the AI are:
+    a. Three difficulty levels:
+        i. Easy: It just fires randomly every turn.
+        ii. Medium: It fires randomly until it hits a ship then fires in orthogonally adjacent spaces to find other hits until a ship is sunk.
+        iii. Hard: Cheater, cheater pumpkin eater! This mode knows where all your ships are and lands a hit every turn.
+    b. Setup: all AI difficulty levels place their ships randomly (must still be legal placement).
+
+3. Custom Addition:
+        a. Your team must decide upon a new addition to the game.
+        b. Your team will describe the Custom Addition using one of the UML diagrams you learned about in EECS 348. You may choose to use any of the UML diagrams.
+        c. Approval from your GTA of the UML diagram is required before moving forward.
+        d. The ceiling on scope and difficulty is up to your team, but your GTA has the right to increase the difficulty if they feel it is necessary.
+        e. Here are some ideas:
