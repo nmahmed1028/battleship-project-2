@@ -2,25 +2,28 @@
 Time Estimates Per Person 
 
 Nayyir Ahmed
-    Programing: 6 hrs
+    Programing: 4 hrs
     Planning: 15 min
+    Documentation: 30 min
 
 Aiham Alhmoud
-    Carrying: all the time
+    Programing: 4 hrs
     Planning: 15 min
+    Documentation: 30 min
 
 Damien Mendez
-    Programming: 6 hrs
+    Programming: 4 hrs
     Planning: 15 min
+    Documentation: 30 min
 
 Ashley Aldave
-    Documentation: 6:00 hrs
-    Programming: 30 min
+    Documentation: 4 hrs
+    Programming: 30 - 1 hr 
     Planning: 15 min
 
 Dylan Davis
-    Documentation: 6:00 hrs
-    Programming: 30 min 
+    Documentation: 4 hrs
+    Programming: 30 - 1 hr 
     Planning: 15 min
 
 ================================================================
@@ -32,10 +35,10 @@ Nayyir Ahmed
     Programming: 15 min         11/23            Added a skeleton for ai class
     Planning: 30 min            11/25            Team Meeting Dicsussing project direction 
     Programing: 1 hr            11/26            ai dialoge added  
-    Programing: 1 hr            11/27            ai classes added
+    Programing: 2 hr            11/27            ai classes added
     Programing: 4 hr            11/28            Imports fixed                   
     Planning: 15 min            11/29            Online check in with progress
-
+Total: 8:15 hrs       
 
 Aiham Alhmoud
     Planning: 15 min            11/18            Team Meeting Dicsussing project direction
@@ -43,27 +46,28 @@ Aiham Alhmoud
     Programing: 2 hrs           11/28                     
     Programing: 6 hrs           11/29                 
     Planning: 15 min            11/29            Online check in with progress
-
+Total: 9 hrs
 
 Damien Mendez
     Planning: 15 min            11/18            Team Meeting Dicsussing project direction
     Planning: 30 min            11/25            Team Meeting Dicsussing project direction
-    Programing: 2 hrs           11/29            Ai dialog and win loss dialog         
+    Programing: 4 hrs           11/29            Ai dialog and win loss dialog         
     Planning: 15 min            11/29            Online check in with progress
-
+Total: 5 hrs 
 
 Ashley Aldave
     Planning: 15 min            11/18            Team Meeting Dicsussing project direction
-    Documentation: 1:00 hr      11/25                           UML diagram
+    Documentation: 4 hr         11/25                           UML diagram
     Planning: 30 min            11/25            Team Meeting Dicsussing project direction
-    Programming: 30 min         11/29            Ai dialog
+    Programming: 30 min         11/29                           Ai dialog
     Planning: 15 min            11/29            Online check in with progress
-
+Total: 5:30 hrs
 
 Dylan Davis
     Planning: 15 min            11/18            Team Meeting Dicsussing project direction
     Planning: 30 min            11/25            Team Meeting Dicsussing project direction
-    Programming: 30 min         11/29            Ai dialog
+    Documentation: 6 hrs        11/29            Time and Structure documentation
+    Programming: 30 min         11/29                           Ai dialog
     Planning: 15 min            11/29            Online check in with progress
-
+Total: 7:30 hrs
 '''
