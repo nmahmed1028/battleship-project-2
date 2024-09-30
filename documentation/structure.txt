@@ -1,1 +1,1 @@
-This file is for the structure and documentation of the code
+This file is for the structure and documentation of the code additions. 
