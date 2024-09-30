@@ -1,3 +1,60 @@
 '''
+Time Estimates Per Person 
+
+Nayyir Ahmed
+    Programing: 6 hrs
+    Planning: 15 min
+
+Aiham Alhmoud
+    Carrying: all the time
+    Planning: 15 min
+
+Damien Mendez
+    Programming: 6 hrs
+    Planning: 15 min
+
+Ashley Aldave
+    Documentation: 6:00 hrs
+    Programming: 30 min
+    Planning: 15 min
+
+Dylan Davis
+    Documentation: 6:00 hrs
+    Programming: 30 min 
+    Planning: 15 min
+
+================================================================
+
+Actual Time Worked              Date            Descritption of Work
+
+Nayyir Ahmed
+    Planning: 15 min
+    Programing: 6 hrs                               
+    Planning: 15 min
+
+
+Aiham Alhmoud
+    Planning: 15 min
+    Programing: 6 hrs   
+    Planning: 15 min
+
+
+Damien Mendez
+    Planning: 15 min
+    Programing: 6 hrs
+    Planning: 15 min
+
+
+Ashley Aldave
+    Planning: 15 min
+    Documentation: 6:00 hrs
+    Programming: 30 min
+    Planning: 15 min
+
+
+Dylan Davis
+    Documentation: 6:00 hrs
+    Programming: 30 min
+    Planning: 15 min
 
 '''
